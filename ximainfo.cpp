@@ -34,7 +34,7 @@ void CxImage::SetTransIndex(int32_t idx)
 {
 	if (idx<(int32_t)head.biClrUsed)
 		info.nBkgndIndex = idx;
-	else 
+	else
 		info.nBkgndIndex = 0;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ uint32_t CxImage::GetFlags() const
  *  - 0x00??0000 = blend modes
  *  - 0x0000???? = layer id or user flags
  *
- * \param bLockReservedFlags protects the "reserved" and "blend modes" flags 
+ * \param bLockReservedFlags protects the "reserved" and "blend modes" flags
  */
 void CxImage::SetFlags(uint32_t flags, bool bLockReservedFlags)
 {
@@ -644,7 +644,7 @@ void CxImage::SetProgress(int32_t p)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Used to quit the slow loops or the codecs.
- * - SetEscape(-1) before Decode forces the function to exit, right after  
+ * - SetEscape(-1) before Decode forces the function to exit, right after
  *   the image width and height are available ( for bmp, jpg, gif, tif )
  */
 void CxImage::SetEscape(int32_t i)

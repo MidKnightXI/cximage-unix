@@ -91,7 +91,7 @@ size_t CxMemFile::Write(const void *buffer, size_t size, size_t count)
 	m_Position += nCount;
 
 	if (m_Position > (int32_t)m_Size) m_Size = m_Position;
-	
+
 	return count;
 }
 //////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@ bool CxMemFile::PutC(uint8_t c)
 	m_pBuffer[m_Position++] = c;
 
 	if (m_Position > (int32_t)m_Size) m_Size = m_Position;
-	
+
 	return true;
 }
 //////////////////////////////////////////////////////////

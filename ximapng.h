@@ -58,7 +58,7 @@ public:
 		ENCODE_BEST_SPEED =          2 << 1,
 		ENCODE_BEST_COMPRESSION =    3 << 1,
 		ENCODE_DEFAULT_COMPRESSION = 4 << 1
-	}; 
+	};
 
 protected:
 	void ima_png_error(png_struct *png_ptr, char *message);

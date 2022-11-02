@@ -16,7 +16,7 @@
 
 #include "xfile.h"
 
-static tsize_t 
+static tsize_t
 _tiffReadProcEx(thandle_t fd, tdata_t buf, tsize_t size)
 {
 	return (tsize_t)((CxFile*)fd)->Read(buf, 1, size);
@@ -31,7 +31,7 @@ _tiffWriteProcEx(thandle_t fd, tdata_t buf, tsize_t size)
 static toff_t
 _tiffSeekProcEx(thandle_t fd, toff_t off, int whence)
 {
-	if ( off == 0xFFFFFFFF ) 
+	if ( off == 0xFFFFFFFF )
 		return 0xFFFFFFFF;
 	if (!((CxFile*)fd)->Seek(off, whence))
 		return 0xFFFFFFFF;
@@ -75,7 +75,7 @@ TIFFOpen(const char* name, const char* mode)
 {
 	static const char module[] = "TIFFOpen";
    FILE* stream = fopen(name, mode);
-	if (stream == NULL) 
+	if (stream == NULL)
    {
 		TIFFError(module, "%s: Cannot open", name);
 		return NULL;

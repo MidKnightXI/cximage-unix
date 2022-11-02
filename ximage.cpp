@@ -6,7 +6,7 @@
 #include "ximage.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-// CxImage 
+// CxImage
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Initialize the internal structures
@@ -52,7 +52,7 @@ bool CxImage::Destroy()
 {
 	//free this only if it's valid and it's not a ghost
 	if (info.pGhost==NULL){
-		if (ppLayers) { 
+		if (ppLayers) {
 			for(int32_t n=0; n<info.nNumLayers;n++){ delete ppLayers[n]; }
 			delete [] ppLayers; ppLayers=0; info.nNumLayers = 0;
 		}
@@ -214,7 +214,7 @@ void* CxImage::Create(uint32_t dwWidth, uint32_t dwHeight, uint32_t wBpp, uint32
     head.biHeight = dwHeight;	// fill in height from parameter
     head.biPlanes = 1;			// must be 1
     head.biBitCount = (uint16_t)wBpp;		// from parameter
-    head.biCompression = BI_RGB;    
+    head.biCompression = BI_RGB;
     head.biSizeImage = info.dwEffWidth * dwHeight;
 //    head.biXPelsPerMeter = 0; See SetXDPI
 //    head.biYPelsPerMeter = 0; See SetYDPI
@@ -253,7 +253,7 @@ void* CxImage::Create(uint32_t dwWidth, uint32_t dwHeight, uint32_t wBpp, uint32
  * \return pointer to the image pixels. <b> USE CAREFULLY </b>
  */
 uint8_t* CxImage::GetBits(uint32_t row)
-{ 
+{
 	if (pDib){
 		if (row) {
 			if (row<(uint32_t)head.biHeight){
@@ -517,7 +517,7 @@ int32_t CxImage::CompareColors(const void *elem1, const void *elem2)
 
 	int32_t g1 = (int32_t)RGB2GRAY(c1->rgbRed,c1->rgbGreen,c1->rgbBlue);
 	int32_t g2 = (int32_t)RGB2GRAY(c2->rgbRed,c2->rgbGreen,c2->rgbBlue);
-	
+
 	return (g1-g2);
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -525,7 +525,7 @@ int32_t CxImage::CompareColors(const void *elem1, const void *elem2)
  * simply calls "if (memblock) free(memblock);".
  * Useful when calling Encode for a memory buffer,
  * from a DLL compiled with different memory management options.
- * CxImage::FreeMemory will use the same memory environment used by Encode. 
+ * CxImage::FreeMemory will use the same memory environment used by Encode.
  * \author [livecn]
  */
 void CxImage::FreeMemory(void* memblock)

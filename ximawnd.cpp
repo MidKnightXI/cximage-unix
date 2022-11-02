@@ -5,7 +5,7 @@
 
 #include "ximage.h"
 
-#include "ximaiter.h" 
+#include "ximaiter.h"
 #include "ximabmp.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ int32_t NumColorEntries(int32_t nBitsPerPixel, int32_t nCompression, uint32_t bi
 	// If biClrUsed is provided, and it is a legal value, use it
 	if (biClrUsed > 0 && biClrUsed <= (uint32_t)nColors)
 		return biClrUsed;
-	
+
 	return nColors;
 }
 
@@ -83,7 +83,7 @@ int32_t GetDIBits(
 	//3. Creating new bitmap and receive pointer to it's bits.
 	HBITMAP hTargetBitmap;
 	void *pBuffer;
-	
+
 	//3.1 Initilize DIBINFO structure
 	DIBINFO  dibInfo;
 	dibInfo.bmiHeader.biBitCount = 24;
@@ -122,7 +122,7 @@ int32_t GetDIBits(
 	if (!memDc) {
 		ASSERT(FALSE);
 	}
-	
+
 	HDC targetDc = CreateCompatibleDC(NULL);
 	if (!targetDc) {
 		ASSERT(FALSE);
@@ -155,7 +155,7 @@ int32_t GetDIBits(
 
 	return 1;
 }
-#endif 
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 #if CXIMAGE_SUPPORT_WINDOWS
@@ -379,7 +379,7 @@ bool CxImage::CreateFromHANDLE(HANDLE hMem)
 											low_nibble = !low_nibble;
 										}
 										if ((((status_byte+1) >> 1) & 1 ) == 1)
-											second_byte = *(lpDIBBits++);												
+											second_byte = *(lpDIBBits++);
 										break;
 									};
 									break;
@@ -446,7 +446,7 @@ bool CxImage::CreateFromHANDLE(HANDLE hMem)
 										int32_t nNumBytes = sizeof(uint8_t) * status_byte;
 										memcpy((void *)(iter.GetRow(scanline) + bits), lpDIBBits, nNumBytes);
 										lpDIBBits += nNumBytes;
-										// align run length to even number of bytes 
+										// align run length to even number of bytes
 										if ((status_byte & 1) == 1)
 											second_byte = *(lpDIBBits++);
 										bits += status_byte;
@@ -494,7 +494,7 @@ bool CxImage::CreateFromHANDLE(HANDLE hMem)
 /**
  * Transfer the image in a icon handle, with transparency.
  * \param hdc: target device context (the screen, usually)
- * \param bTransparency : (optional) exports trancparency 
+ * \param bTransparency : (optional) exports trancparency
  * \return icon handle, or NULL if an error occurs.
  * \sa MakeBitmap
  * \author [brunom]
@@ -528,7 +528,7 @@ HICON CxImage::MakeIcon(HDC hdc, bool bTransparency)
 /**
  * Transfer the image in a  bitmap handle
  * \param hdc: target device context (the screen, usually)
- * \param bTransparency : (optional) exports trancparency 
+ * \param bTransparency : (optional) exports trancparency
  * \return bitmap handle, or NULL if an error occurs.
  * \sa Draw2HBITMAP, MakeIcon
  * \author []; changes [brunom]
@@ -626,8 +626,8 @@ HBITMAP CxImage::MakeBitmap(HDC hdc, bool bTransparency)
 bool CxImage::IsHBITMAPAlphaValid( HBITMAP hbmp )
 {
 	bool lbAlphaValid = false;
-	if (hbmp) 
-	{ 
+	if (hbmp)
+	{
 		BITMAP bm;
 		// get informations about the bitmap
 		GetObject(hbmp, sizeof(BITMAP), (LPSTR) &bm);
@@ -659,7 +659,7 @@ bool CxImage::IsHBITMAPAlphaValid( HBITMAP hbmp )
 					// check if Alpha Channel is realy valid (anny value not zero)
 					for( ;lpArray != lpArrayEnd ; ++lpArray )
 					{
-						// any alpha value not zero 
+						// any alpha value not zero
 						if( lpArray->rgbReserved != 0 )
 						{
 							// must be vaid alph channel
@@ -681,8 +681,8 @@ bool CxImage::IsHBITMAPAlphaValid( HBITMAP hbmp )
 /**
  * Bitmap resource constructor
  * \param hbmp : bitmap resource handle
- * \param hpal : (optional) palette, useful for 8bpp DC 
- * \param bTransparency : (optional) for 32bpp images only, imports trancparency 
+ * \param hpal : (optional) palette, useful for 8bpp DC
+ * \param bTransparency : (optional) for 32bpp images only, imports trancparency
  * \return true if everything is ok
  * \author []; changes [brunom]
  */
@@ -691,7 +691,7 @@ bool CxImage::CreateFromHBITMAP(HBITMAP hbmp, HPALETTE hpal, bool bTransparency)
 	if (!Destroy())
 		return false;
 
-	if (hbmp) { 
+	if (hbmp) {
         BITMAP bm;
 		// get informations about the bitmap
         GetObject(hbmp, sizeof(BITMAP), (LPSTR) &bm);
@@ -761,7 +761,7 @@ bool CxImage::CreateFromHBITMAP(HBITMAP hbmp, HPALETTE hpal, bool bTransparency)
 /**
  * icon resource constructor
  * \param hico : icon resource handle
- * \param bTransparency : (optional) for 32bpp images only, imports trancparency 
+ * \param bTransparency : (optional) for 32bpp images only, imports trancparency
  * \return true if everything is ok
  * \author []; changes [Arlen Albert Keshabian], [brunom]
  */
@@ -794,7 +794,7 @@ bool CxImage::CreateFromHICON(HICON hico, bool bTransparency)
 
 	DeleteObject(iinfo.hbmColor); //<Sims>
 	DeleteObject(iinfo.hbmMask);  //<Sims>
-	
+
 	return l_bResult;
 }
 #endif //_WIN32_WCE
@@ -829,11 +829,11 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 
 	//required for MM_ANISOTROPIC, MM_HIENGLISH, and similar modes [Greg Peatfield]
 	int32_t hdc_Restore = ::SaveDC(hdc);
-	if (!hdc_Restore) 
+	if (!hdc_Restore)
 		return 0;
 
 #if !defined (_WIN32_WCE)
-	RECT mainbox; // (experimental) 
+	RECT mainbox; // (experimental)
 	if (pClipRect){
 		GetClipBox(hdc,&mainbox);
 		HRGN rgn = CreateRectRgnIndirect(pClipRect);
@@ -912,11 +912,11 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 						sx = cxmax(0L,(int32_t)floor(dx));
 #if CXIMAGE_SUPPORT_INTERPOLATION
 						if (bSmooth){
-							if (fx > 1 && fy > 1) { 
-								c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-							} else { 
-								c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-							} 
+							if (fx > 1 && fy > 1) {
+								c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+							} else {
+								c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+							}
 						} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 						{
@@ -984,7 +984,7 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 				float fy=(float)head.biHeight/(float)cy;
 				float dx,dy;
 				int32_t sx,sy;
-				
+
 				for(yy=0;yy<desth;yy++){
 					dy = head.biHeight-(ymax-yy-y)*fy;
 					sy = cxmax(0L,(int32_t)floor(dy));
@@ -1008,11 +1008,11 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 							ci = GetPixelIndex(sx,sy);
 #if CXIMAGE_SUPPORT_INTERPOLATION
 							if (bSmooth){
-								if (fx > 1 && fy > 1) { 
-									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} else { 
-									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} 
+								if (fx > 1 && fy > 1) {
+									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								} else {
+									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								}
 							} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 							{
@@ -1024,11 +1024,11 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 						} else {
 #if CXIMAGE_SUPPORT_INTERPOLATION
 							if (bSmooth){
-								if (fx > 1 && fy > 1) { 
-									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} else { 
-									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} 
+								if (fx > 1 && fy > 1) {
+									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								} else {
+									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								}
 							} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 							{
@@ -1042,18 +1042,18 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 						//if ((head.biClrUsed && ci!=cit) || ((!head.biClrUsed||bSmooth) && *pc!=*pct) || !bTransparent){
 						if ((head.biClrUsed && ci!=cit) || (!head.biClrUsed && *pc!=*pct) || !bTransparent){
 							// DJT, assume many pixels are fully transparent or opaque and thus avoid multiplication
-							if (a == 0) {			// Transparent, retain dest 
-								pdst+=3; 
-							} else if (a == 255) {	// opaque, ignore dest 
-								*pdst++= c.rgbBlue; 
-								*pdst++= c.rgbGreen; 
-								*pdst++= c.rgbRed; 
-							} else {				// semi transparent 
+							if (a == 0) {			// Transparent, retain dest
+								pdst+=3;
+							} else if (a == 255) {	// opaque, ignore dest
+								*pdst++= c.rgbBlue;
+								*pdst++= c.rgbGreen;
+								*pdst++= c.rgbRed;
+							} else {				// semi transparent
 								a1=(uint8_t)~a;
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8); 
-							} 
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8);
+							}
 						} else {
 							pdst+=3;
 						}
@@ -1091,18 +1091,18 @@ int32_t CxImage::Draw(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, REC
 						//if (*pc!=*pct || !bTransparent){
 						if ((head.biClrUsed && ci!=cit) || (!head.biClrUsed && *pc!=*pct) || !bTransparent){
 							// DJT, assume many pixels are fully transparent or opaque and thus avoid multiplication
-							if (a == 0) {			// Transparent, retain dest 
-								pdst+=3; 
-							} else if (a == 255) {	// opaque, ignore dest 
-								*pdst++= c.rgbBlue; 
-								*pdst++= c.rgbGreen; 
-								*pdst++= c.rgbRed; 
-							} else {				// semi transparent 
+							if (a == 0) {			// Transparent, retain dest
+								pdst+=3;
+							} else if (a == 255) {	// opaque, ignore dest
+								*pdst++= c.rgbBlue;
+								*pdst++= c.rgbGreen;
+								*pdst++= c.rgbRed;
+							} else {				// semi transparent
 								a1=(uint8_t)~a;
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8); 
-							} 
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8);
+							}
 						} else {
 							pdst+=3;
 						}
@@ -1153,11 +1153,11 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 
 	//required for MM_ANISOTROPIC, MM_HIENGLISH, and similar modes [Greg Peatfield]
 	int32_t hdc_Restore = ::SaveDC(hdc);
-	if (!hdc_Restore) 
+	if (!hdc_Restore)
 		return 0;
 
 #if !defined (_WIN32_WCE)
-	RECT mainbox; // (experimental) 
+	RECT mainbox; // (experimental)
 	if (pClipRect){
 		GetClipBox(hdc,&mainbox);
 		HRGN rgn = CreateRectRgnIndirect(pClipRect);
@@ -1228,11 +1228,11 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 						sx = cxmax(0L,(int32_t)floor(dx));
 #if CXIMAGE_SUPPORT_INTERPOLATION
 						if (bSmooth){
-							if (fx > 1 && fy > 1) { 
-								c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-							} else { 
-								c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-							} 
+							if (fx > 1 && fy > 1) {
+								c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+							} else {
+								c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+							}
 						} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 						{
@@ -1299,7 +1299,7 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 				float fy=(float)head.biHeight/(float)cy;
 				float dx,dy;
 				int32_t sx,sy;
-				
+
 				for(yy=0;yy<desth;yy++){
 					dy = head.biHeight-(ymax-yy-y)*fy;
 					sy = cxmax(0L,(int32_t)floor(dy));
@@ -1319,11 +1319,11 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 							ci = GetPixelIndex(sx,sy);
 #if CXIMAGE_SUPPORT_INTERPOLATION
 							if (bSmooth){
-								if (fx > 1 && fy > 1) { 
-									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} else { 
-									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} 
+								if (fx > 1 && fy > 1) {
+									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								} else {
+									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								}
 							} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 							{
@@ -1335,11 +1335,11 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 						} else {
 #if CXIMAGE_SUPPORT_INTERPOLATION
 							if (bSmooth){
-								if (fx > 1 && fy > 1) { 
-									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} else { 
-									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT); 
-								} 
+								if (fx > 1 && fy > 1) {
+									c = GetAreaColorInterpolated(dx - 0.5f, dy - 0.5f, fx, fy, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								} else {
+									c = GetPixelColorInterpolated(dx - 0.5f, dy - 0.5f, CxImage::IM_BILINEAR, CxImage::OM_REPEAT);
+								}
 							} else
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
 							{
@@ -1353,18 +1353,18 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 						//if ((head.biClrUsed && ci!=cit) || ((!head.biClrUsed||bSmooth) && *pc!=*pct) || !bTransparent){
 						if ((head.biClrUsed && ci!=cit) || (!head.biClrUsed && *pc!=*pct) || !bTransparent){
 							// DJT, assume many pixels are fully transparent or opaque and thus avoid multiplication
-							if (a == 0) {			// Transparent, retain dest 
-								pdst+=3; 
-							} else if (a == 255) {	// opaque, ignore dest 
-								*pdst++= c.rgbBlue; 
-								*pdst++= c.rgbGreen; 
-								*pdst++= c.rgbRed; 
-							} else {				// semi transparent 
+							if (a == 0) {			// Transparent, retain dest
+								pdst+=3;
+							} else if (a == 255) {	// opaque, ignore dest
+								*pdst++= c.rgbBlue;
+								*pdst++= c.rgbGreen;
+								*pdst++= c.rgbRed;
+							} else {				// semi transparent
 								a1=(uint8_t)~a;
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8); 
-							} 
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8);
+							}
 						} else {
 							pdst+=3;
 						}
@@ -1398,18 +1398,18 @@ HBITMAP CxImage::Draw2HBITMAP(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t
 						//if (*pc!=*pct || !bTransparent){
 						if ((head.biClrUsed && ci!=cit) || (!head.biClrUsed && *pc!=*pct) || !bTransparent){
 							// DJT, assume many pixels are fully transparent or opaque and thus avoid multiplication
-							if (a == 0) {			// Transparent, retain dest 
-								pdst+=3; 
-							} else if (a == 255) {	// opaque, ignore dest 
-								*pdst++= c.rgbBlue; 
-								*pdst++= c.rgbGreen; 
-								*pdst++= c.rgbRed; 
-							} else {				// semi transparent 
+							if (a == 0) {			// Transparent, retain dest
+								pdst+=3;
+							} else if (a == 255) {	// opaque, ignore dest
+								*pdst++= c.rgbBlue;
+								*pdst++= c.rgbGreen;
+								*pdst++= c.rgbRed;
+							} else {				// semi transparent
 								a1=(uint8_t)~a;
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8); 
-								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8); 
-							} 
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbBlue)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbGreen)>>8);
+								*pdst++=(uint8_t)((*pdst * a1 + a * c.rgbRed)>>8);
+							}
 						} else {
 							pdst+=3;
 						}
@@ -1459,18 +1459,18 @@ int32_t CxImage::Draw2(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy)
 
 	//required for MM_ANISOTROPIC, MM_HIENGLISH, and similar modes [Greg Peatfield]
 	int32_t hdc_Restore = ::SaveDC(hdc);
-	if (!hdc_Restore) 
+	if (!hdc_Restore)
 		return 0;
 
 	if (!bTransparent){
 #if !defined (_WIN32_WCE)
-		SetStretchBltMode(hdc,COLORONCOLOR);	
+		SetStretchBltMode(hdc,COLORONCOLOR);
 #endif
 		StretchDIBits(hdc, x, y, cx, cy, 0, 0, head.biWidth, head.biHeight,
 						info.pImage,(BITMAPINFO*)pDib, DIB_RGB_COLORS,SRCCOPY);
 	} else {
 		// draw image with transparent background
-		const int32_t safe = 0; // or else GDI fails in the following - sometimes 
+		const int32_t safe = 0; // or else GDI fails in the following - sometimes
 		RECT rcDst = {x+safe, y+safe, x+cx, y+cy};
 		if (RectVisible(hdc, &rcDst)){
 		/////////////////////////////////////////////////////////////////
@@ -1538,7 +1538,7 @@ int32_t CxImage::Stretch(HDC hdc, int32_t xoffset, int32_t yoffset, int32_t xsiz
 	if((pDib)&&(hdc)) {
 		//palette must be correctly filled
 #if !defined (_WIN32_WCE)
-		SetStretchBltMode(hdc,COLORONCOLOR);	
+		SetStretchBltMode(hdc,COLORONCOLOR);
 #endif
 		StretchDIBits(hdc, xoffset, yoffset,
 					xsize, ysize, 0, 0, head.biWidth, head.biHeight,
@@ -1662,7 +1662,7 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
 {
 	if (!IsValid())
         return -1;
-    
+
 	//get the background
 	HDC pDC;
 	if (hdc) pDC=hdc; else pDC = ::GetDC(0);
@@ -1674,7 +1674,7 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
     //choose the font
 	HFONT m_Font;
     m_Font=CreateFontIndirect( &pTextType->lfont );
-    
+
     // get colors in RGBQUAD
     RGBQUAD p_forecolor = RGBtoRGBQUAD(pTextType->fcolor);
     RGBQUAD p_backcolor = RGBtoRGBQUAD(pTextType->bcolor);
@@ -1706,7 +1706,7 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
 	SetBkMode(TmpDC,OPAQUE);
 	//Set text position;
 	RECT pos = {0,0,0,0};
-	
+
     // get text length and number of lines
     int32_t i=0, numlines=1, len=(int32_t)_tcsclen(pTextType->text);
     while (i<len)
@@ -1718,8 +1718,8 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
 	::DrawText(TmpDC, pTextType->text, len, &pos, /*DT_EDITCONTROL|DT_EXTERNALLEADING|*/DT_NOPREFIX | DT_CALCRECT );
 
     // increase only if it's really italics, and only one line height
-	if ( pTextType->lfont.lfItalic ) 
-        pos.right += pos.bottom/2/numlines; 
+	if ( pTextType->lfont.lfItalic )
+        pos.right += pos.bottom/2/numlines;
 
     // background frame and rounding radius
 	int32_t frame = 0, roundR = 0;
@@ -1747,7 +1747,7 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
 	memset(pbase,0,height*((((24 * width) + 31) / 32) * 4));
 
 	::DrawText(TmpDC,pTextType->text,len, &pos, /*DT_EDITCONTROL|DT_EXTERNALLEADING|*/DT_NOPREFIX| pTextType->align );
-    
+
 	CxImage itext;
 	itext.CreateFromHBITMAP(TmpBmp);
     y=head.biHeight-y-1;
@@ -1771,12 +1771,12 @@ int32_t CxImage::DrawStringEx(HDC hdc, int32_t x, int32_t y, CXTEXTINFO *pTextTy
     else if ( pTextType->align == DT_RIGHT )
         x -= width;
     if (x<0) x=0;
-    
+
     //draw the background first, if it exists
     int32_t ix,iy;
     if ( pTextType->opaque )
     {
-        int32_t ixf=0; 
+        int32_t ixf=0;
         for (ix=0;ix<width;ix++)
         {
             if ( ix<=roundR )
@@ -1841,21 +1841,21 @@ void CxImage::InitTextInfo( CXTEXTINFO *txt )
 {
 
     memset( txt, 0, sizeof(CXTEXTINFO));
-    
+
     // LOGFONT defaults
-    txt->lfont.lfHeight        = -36; 
-    txt->lfont.lfCharSet       = EASTEUROPE_CHARSET; // just for Central-European users 
+    txt->lfont.lfHeight        = -36;
+    txt->lfont.lfCharSet       = EASTEUROPE_CHARSET; // just for Central-European users
     txt->lfont.lfWeight        = FW_NORMAL;
-    txt->lfont.lfWidth         = 0; 
-    txt->lfont.lfEscapement    = 0; 
-    txt->lfont.lfOrientation   = 0; 
-    txt->lfont.lfItalic        = FALSE; 
-    txt->lfont.lfUnderline     = FALSE; 
-    txt->lfont.lfStrikeOut     = FALSE; 
-    txt->lfont.lfOutPrecision  = OUT_DEFAULT_PRECIS; 
-    txt->lfont.lfClipPrecision = CLIP_DEFAULT_PRECIS; 
-    txt->lfont.lfQuality       = PROOF_QUALITY; 
-    txt->lfont.lfPitchAndFamily= DEFAULT_PITCH | FF_DONTCARE ; 
+    txt->lfont.lfWidth         = 0;
+    txt->lfont.lfEscapement    = 0;
+    txt->lfont.lfOrientation   = 0;
+    txt->lfont.lfItalic        = FALSE;
+    txt->lfont.lfUnderline     = FALSE;
+    txt->lfont.lfStrikeOut     = FALSE;
+    txt->lfont.lfOutPrecision  = OUT_DEFAULT_PRECIS;
+    txt->lfont.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+    txt->lfont.lfQuality       = PROOF_QUALITY;
+    txt->lfont.lfPitchAndFamily= DEFAULT_PITCH | FF_DONTCARE ;
     _stprintf( txt->lfont.lfFaceName, _T("Arial")); //use TCHAR mappings <Cesar M>
 
     // initial colors
@@ -1868,7 +1868,7 @@ void CxImage::InitTextInfo( CXTEXTINFO *txt )
     txt->b_opacity = 0.0;   // default: opaque background
     txt->b_outline = 0;     // default: no outline (OUTLINE NOT IMPLEMENTED AT THIS TIME)
     txt->b_round   = 20;    // default: rounding radius is 20% of the rectangle height
-    // the text 
+    // the text
     _stprintf( txt->text, _T("Sample Text 01234��")); // text use TCHAR mappings <Cesar M>
     txt->align = DT_CENTER;
     return;

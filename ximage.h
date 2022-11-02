@@ -1,6 +1,6 @@
 /*
  * File:	ximage.h
- * Purpose:	General Purpose Image Class 
+ * Purpose:	General Purpose Image Class
  */
 /*
   --------------------------------------------------------------------------------
@@ -26,7 +26,7 @@
 
 	Permission is hereby granted to use, copy, modify, and distribute this
 	source code, or portions hereof, for any purpose, including commercial applications,
-	freely and without fee, subject to the following restrictions: 
+	freely and without fee, subject to the following restrictions:
 
 	1. The origin of this software must not be misrepresented; you must not
 	claim that you wrote the original software. If you use this software
@@ -50,7 +50,7 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif 
+#endif
 
 #ifdef __unix__
   #include <unistd.h>
@@ -246,7 +246,7 @@ typedef struct tagCxTextInfo
     int32_t     align;      ///< DT_CENTER, DT_RIGHT, DT_LEFT aligment for multiline text
     uint8_t     smooth;     ///< text smoothing option. Default is false.
     uint8_t     opaque;     ///< text has background or hasn't. Default is true.
-						 ///< data for background (ignored if .opaque==FALSE) 
+						 ///< data for background (ignored if .opaque==FALSE)
     COLORREF bcolor;     ///< background color
     float    b_opacity;  ///< opacity value for background between 0.0-1.0 Default is 0. (opaque)
     uint8_t     b_outline;  ///< outline width for background (zero: no outline)
@@ -486,7 +486,7 @@ public:
 	static float KernelPower(const float x, const float a = 2);
 //@}
 #endif //CXIMAGE_SUPPORT_INTERPOLATION
-	
+
 /** \addtogroup Painting */ //@{
 #if CXIMAGE_SUPPORT_WINDOWS
 	int32_t	Blt(HDC pDC, int32_t x=0, int32_t y=0);

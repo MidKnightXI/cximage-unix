@@ -18,7 +18,7 @@ bool CxImage::SelectionIsValid()
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Gets the smallest rectangle that contains the selection 
+ * Gets the smallest rectangle that contains the selection
  */
 void CxImage::SelectionGetBox(RECT& r)
 {
@@ -306,8 +306,8 @@ bool CxImage::SelectionAddPolygon(POINT *points, int32_t npoints, uint8_t level)
 		for(y=ymin;y<ymax;y++){
 			for(x=xmin;x<xmax;x++){
 				if (plocal[x+y*head.biWidth]==0){
-					// Subject: FLOOD FILL ROUTINE              Date: 12-23-97 (00:57)       
-					// Author:  Petter Holmberg                 Code: QB, QBasic, PDS        
+					// Subject: FLOOD FILL ROUTINE              Date: 12-23-97 (00:57)
+					// Author:  Petter Holmberg                 Code: QB, QBasic, PDS
 					// Origin:  petter.holmberg@usa.net         Packet: GRAPHICS.ABC
 					first=0;
 					last=1;
@@ -370,7 +370,7 @@ bool CxImage::SelectionAddPolygon(POINT *points, int32_t npoints, uint8_t level)
 							fx--;
 							fxx--;
 						}
-						
+
 						first++;
 						if (first == npix) first = 0;
 					}
@@ -520,7 +520,7 @@ void CxImage::SelectionSet(const int32_t x,const int32_t y,const uint8_t level)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Gets the Selection level for a single pixel 
+ * Gets the Selection level for a single pixel
  */
 uint8_t CxImage::SelectionGet(const int32_t x,const int32_t y)
 {
@@ -529,7 +529,7 @@ uint8_t CxImage::SelectionGet(const int32_t x,const int32_t y)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Rebuilds the SelectionBox 
+ * Rebuilds the SelectionBox
  */
 void CxImage::SelectionRebuildBox()
 {
@@ -581,7 +581,7 @@ void CxImage::SelectionRebuildBox()
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Gets the Selection level for a single pixel 
+ * Gets the Selection level for a single pixel
  * "blind" version assumes that (x,y) is inside to the image.
  */
 uint8_t CxImage::BlindSelectionGet(const int32_t x,const int32_t y)
@@ -638,7 +638,7 @@ bool CxImage::SelectionMirror()
 	if (!pSelection) return false;
 	uint8_t* pSelection2 = (uint8_t*)malloc(head.biWidth * head.biHeight);
 	if (!pSelection2) return false;
-	
+
 	uint8_t *iSrc,*iDst;
 	int32_t wdt=head.biWidth-1;
 	iSrc=pSelection + wdt;
@@ -651,7 +651,7 @@ bool CxImage::SelectionMirror()
 	}
 	free(pSelection);
 	pSelection=pSelection2;
-	
+
 	int32_t left = info.rSelectionBox.left;
 	info.rSelectionBox.left = head.biWidth - info.rSelectionBox.right;
 	info.rSelectionBox.right = head.biWidth - left;
@@ -664,7 +664,7 @@ bool CxImage::SelectionMirror()
  */
 bool CxImage::SelectionToHRGN(HRGN& region)
 {
-	if (pSelection && region){           
+	if (pSelection && region){
         for(int32_t y = 0; y < head.biHeight; y++){
             HRGN hTemp = NULL;
             int32_t iStart = -1;

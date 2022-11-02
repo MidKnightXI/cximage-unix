@@ -176,11 +176,11 @@ RGBQUAD CxImage::GetPixelColor(int32_t x,int32_t y, bool bGetAlpha)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * This is (a bit) faster version of GetPixelColor. 
+ * This is (a bit) faster version of GetPixelColor.
  * It tests bounds only in debug mode (_DEBUG defined).
- * 
- * It is an error to request out-of-borders pixel with this method. 
- * In DEBUG mode an exception will be thrown, and data will be violated in non-DEBUG mode. 
+ *
+ * It is an error to request out-of-borders pixel with this method.
+ * In DEBUG mode an exception will be thrown, and data will be violated in non-DEBUG mode.
  * \author ***bd*** 2.2004
  */
 RGBQUAD CxImage::BlindGetPixelColor(const int32_t x,const int32_t y, bool bGetAlpha)
@@ -432,7 +432,7 @@ bool CxImage::GetPaletteColor(uint8_t i, uint8_t* r, uint8_t* g, uint8_t* b)
 	if (ppal) {
 		*r = ppal[i].rgbRed;
 		*g = ppal[i].rgbGreen;
-		*b = ppal[i].rgbBlue; 
+		*b = ppal[i].rgbBlue;
 		return true;
 	}
 	return false;
@@ -668,7 +668,7 @@ void CxImage::SetClrImportant(uint32_t ncolors)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Returns pointer to pixel. Currently implemented only for truecolor images.
- *  
+ *
  * \param  x,y - coordinates
  *
  * \return pointer to first byte of pixel data
@@ -711,7 +711,7 @@ void CxImage::DrawLine(int32_t StartX, int32_t EndX, int32_t StartY, int32_t End
 	int32_t y2 = EndY;
 
 	int32_t xinc1,xinc2,yinc1,yinc2;      // Increasing values
-	int32_t den, num, numadd,numpixels;   
+	int32_t den, num, numadd,numpixels;
 	int32_t deltax = abs(x2 - x1);        // The difference between the x's
 	int32_t deltay = abs(y2 - y1);        // The difference between the y's
 
@@ -751,12 +751,12 @@ void CxImage::DrawLine(int32_t StartX, int32_t EndX, int32_t StartY, int32_t End
 		numadd = deltax;
 		numpixels = deltay;         // There are more y-values than x-values
 	}
-	
+
 	for (int32_t curpixel = 0; curpixel <= numpixels; curpixel++)
 	{
 		// Draw the current pixel
 		SetPixelColor(x,y,color,bSetAlpha);
-		
+
 		num += numadd;              // Increase the numerator by the top of the fraction
 		if (num >= den)             // Check if numerator >= denominator
 		{

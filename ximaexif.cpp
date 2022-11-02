@@ -107,7 +107,7 @@ bool CxImageJPG::CxExifInfo::DecodeExif(CxFile * hFile, int32_t nReadMode)
 
         switch(marker){
 
-            case M_SOS:   // stop before hitting compressed data 
+            case M_SOS:   // stop before hitting compressed data
                 // If reading entire image is requested, read the rest of the data.
                 if (nReadMode & EXIF_READ_IMAGE){
                     int32_t cp, ep, size;
@@ -163,7 +163,7 @@ bool CxImageJPG::CxExifInfo::DecodeExif(CxFile * hFile, int32_t nReadMode)
 
             case M_EXIF:
                 // Seen files from some 'U-lead' software with Vivitar scanner
-                // that uses marker 31 for non exif stuff.  Thus make sure 
+                // that uses marker 31 for non exif stuff.  Thus make sure
                 // it says 'Exif' in the section before treating it as exif.
                 if ((nReadMode & EXIF_READ_EXIF) && memcmp(Data+2, "Exif", 4) == 0){
                     m_exifinfo->IsExif = process_EXIF((uint8_t *)Data+2, itemlen);
@@ -174,14 +174,14 @@ bool CxImageJPG::CxExifInfo::DecodeExif(CxFile * hFile, int32_t nReadMode)
                 }
                 break;
 
-            case M_SOF0: 
-            case M_SOF1: 
-            case M_SOF2: 
-            case M_SOF3: 
-            case M_SOF5: 
-            case M_SOF6: 
-            case M_SOF7: 
-            case M_SOF9: 
+            case M_SOF0:
+            case M_SOF1:
+            case M_SOF2:
+            case M_SOF3:
+            case M_SOF5:
+            case M_SOF6:
+            case M_SOF7:
+            case M_SOF9:
             case M_SOF10:
             case M_SOF11:
             case M_SOF13:
@@ -204,7 +204,7 @@ bool CxImageJPG::CxExifInfo::DecodeExif(CxFile * hFile, int32_t nReadMode)
 --------------------------------------------------------------------------*/
 bool CxImageJPG::CxExifInfo::process_EXIF(uint8_t * CharBuf, uint32_t length)
 {
-    m_exifinfo->FlashUsed = 0; 
+    m_exifinfo->FlashUsed = 0;
     /* If it's from a digicam, and it used flash, it says so. */
     m_exifinfo->Comments[0] = '\0';  /* Initial value - null string */
 
@@ -236,7 +236,7 @@ bool CxImageJPG::CxExifInfo::process_EXIF(uint8_t * CharBuf, uint32_t length)
     }
 
 	int32_t FirstOffset = Get32u(CharBuf+10);
-    /* <Richard Collins> 
+    /* <Richard Collins>
 	if (FirstOffset < 8 || FirstOffset > 16){
         // I used to ensure this was set to 8 (website I used indicated its 8)
         // but PENTAX Optio 230 has it set differently, and uses it as offset. (Sept 11 2002)
@@ -313,7 +313,7 @@ uint32_t CxImageJPG::CxExifInfo::Get32u(void * Long)
 static const int32_t BytesPerFormat[] = {0,1,1,2,4,8,1,1,2,4,8,4,8};
 #define NUM_FORMATS 12
 
-#define FMT_BYTE       1 
+#define FMT_BYTE       1
 #define FMT_STRING     2
 #define FMT_USHORT     3
 #define FMT_ULONG      4
@@ -463,7 +463,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
                 break;
 
             case TAG_USERCOMMENT:
-                // Olympus has this padded with trailing spaces. Remove these first. 
+                // Olympus has this padded with trailing spaces. Remove these first.
                 for (a=ByteCount;;){
                     a--;
                     if (((char*)ValuePtr)[a] == ' '){
@@ -484,7 +484,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
                             break;
                         }
                     }
-                    
+
                 }else{
                     strncpy(m_exifinfo->Comments, (char*)ValuePtr, 199);
                 }
@@ -501,7 +501,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
             case TAG_MAXAPERTURE:
                 /* More relevant info always comes earlier, so only
                  use this field if we don't have appropriate aperture
-                 information yet. 
+                 information yet.
                 */
                 if (m_exifinfo->ApertureFNumber == 0){
                     m_exifinfo->ApertureFNumber = (float)exp(ConvertAnyFormat(ValuePtr, Format)*log(2.0f)*0.5);
@@ -514,7 +514,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
 
             case TAG_FOCALLENGTH:
                 /* Nice digital cameras actually save the focal length
-                   as a function of how farthey are zoomed in. 
+                   as a function of how farthey are zoomed in.
                 */
 
                 m_exifinfo->FocalLength = (float)ConvertAnyFormat(ValuePtr, Format);
@@ -530,16 +530,16 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
             case TAG_EXPOSURETIME:
                 /* Simplest way of expressing exposure time, so I
                    trust it most.  (overwrite previously computd value
-                   if there is one) 
+                   if there is one)
                 */
-                m_exifinfo->ExposureTime = 
+                m_exifinfo->ExposureTime =
                     (float)ConvertAnyFormat(ValuePtr, Format);
                 break;
 
             case TAG_SHUTTERSPEED:
                 /* More complicated way of expressing exposure time,
                    so only use this value if we don't already have it
-                   from somewhere else.  
+                   from somewhere else.
                 */
                 if (m_exifinfo->ExposureTime == 0){
                     m_exifinfo->ExposureTime = (float)
@@ -566,7 +566,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
             case TAG_EXIF_IMAGELENGTH:
             case TAG_EXIF_IMAGEWIDTH:
                 /* Use largest of height and width to deal with images
-                   that have been rotated to portrait format.  
+                   that have been rotated to portrait format.
                 */
                 a = (int32_t)ConvertAnyFormat(ValuePtr, Format);
                 if (ExifImageWidth < a) ExifImageWidth = a;
@@ -649,7 +649,7 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
 			unsigned Offset = Get32u(ValuePtr);
 			if (Offset>8){
 				SubdirStart = OffsetBase + Offset;
-				if (SubdirStart < OffsetBase || 
+				if (SubdirStart < OffsetBase ||
 					SubdirStart > OffsetBase+ExifLength){
 					strcpy(m_szLastError,"Illegal subdirectory link");
 					return false;
@@ -665,14 +665,14 @@ bool CxImageJPG::CxExifInfo::ProcessExifDir(uint8_t * DirStart, uint8_t * Offset
         /* In addition to linking to subdirectories via exif tags,
            there's also a potential link to another directory at the end
            of each directory.  This has got to be the result of a
-           committee!  
+           committee!
         */
         uint8_t * SubdirStart;
         unsigned Offset;
         Offset = Get16u(DirStart+2+12*NumDirEntries);
         if (Offset){
             SubdirStart = OffsetBase + Offset;
-            if (SubdirStart < OffsetBase 
+            if (SubdirStart < OffsetBase
                 || SubdirStart > OffsetBase+ExifLength){
                 strcpy(m_szLastError,"Illegal subdirectory link");
 				return false;
@@ -709,7 +709,7 @@ double CxImageJPG::CxExifInfo::ConvertAnyFormat(void * ValuePtr, int32_t Format)
         case FMT_ULONG:     Value = Get32u(ValuePtr);          break;
 
         case FMT_URATIONAL:
-        case FMT_SRATIONAL: 
+        case FMT_SRATIONAL:
             {
                 int32_t Num,Den;
                 Num = Get32s(ValuePtr);
@@ -810,13 +810,13 @@ bool CxImageJPG::CxExifInfo::EncodeExif(CxFile * hFile)
     // Initial static jpeg marker.
 	hFile->PutC(0xff);
 	hFile->PutC(0xd8);
-    
+
     if (Sections[0].Type != M_EXIF && Sections[0].Type != M_JFIF){
         // The image must start with an exif or jfif marker.  If we threw those away, create one.
         static uint8_t JfifHead[18] = {
             0xff, M_JFIF,
-            0x00, 0x10, 'J' , 'F' , 'I' , 'F' , 0x00, 0x01, 
-            0x01, 0x01, 0x01, 0x2C, 0x01, 0x2C, 0x00, 0x00 
+            0x00, 0x10, 'J' , 'F' , 'I' , 'F' , 0x00, 0x01,
+            0x01, 0x01, 0x01, 0x2C, 0x01, 0x2C, 0x00, 0x00
         };
         hFile->Write(JfifHead, 18, 1);
     }

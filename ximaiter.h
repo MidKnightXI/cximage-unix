@@ -205,7 +205,7 @@ inline BOOL CImageIterator::PrevStep()
 {
 	Itx -= Stepx;
 	if (Itx >= 0) return 1;
-	else {       
+	else {
 		Ity -= Stepy;
 		if (Ity >= 0 && Ity < (int32_t)ima->GetHeight()) {
 			IterImage -= ima->GetEffWidth();

@@ -145,7 +145,7 @@ bool CxImageICO::Decode(CxFile *hFile)
 						bool bNeedAlpha = false;
 						if (!AlphaIsValid()){
 							AlphaCreate();
-						} else { 
+						} else {
 							bNeedAlpha=true; //32bit icon
 						}
 						for (y = 0; y < head.biHeight; y++) {
@@ -189,7 +189,7 @@ bool CxImageICO::Decode(CxFile *hFile)
 
 						// <vho> - Transparency support w/o Alpha support
 						if (c <= 8){ // only for icons with less than 256 colors (XP icons need alpha).
-							  
+
 							// find a color index, which is not used in the image
 							// it is almost sure to find one, bcs. nobody uses all possible colors for an icon
 
@@ -234,7 +234,7 @@ bool CxImageICO::Decode(CxFile *hFile)
 						SetTransIndex(0); //empty mask, set black as transparent color
 						Negative();
 					}
-				} 
+				}
 				free(mask);
 			}
 			free(icon_list);
@@ -274,13 +274,13 @@ bool CxImageICO::Encode(CxFile * hFile, CxImage ** pImages, int32_t nPageCount)
 			if (!ghost.Encode(hFile,false,nPageCount))
 				cx_throw("Error writing ICO file header");
 		}
-		if (!ghost.Encode(hFile,true,nPageCount)) 
+		if (!ghost.Encode(hFile,true,nPageCount))
 			cx_throw("Error saving ICO image header");
 	}
 	for (i=0; i<nPageCount; i++){	//write bodies
 		ghost.Ghost(pImages[i]);
 		ghost.info.nNumFrames = nPageCount;
-		if (!ghost.Encode(hFile,true,i)) 
+		if (!ghost.Encode(hFile,true,i))
 			cx_throw("Error saving ICO body");
 	}
 
