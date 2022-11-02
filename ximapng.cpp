@@ -136,7 +136,7 @@ bool CxImagePNG::Decode(CxFile *hFile)
 		SetPaletteColor(2,170,170,170);
 		SetPaletteColor(3,255,255,255);
 	} else SetGrayPalette(); //<DP> needed for grayscale PNGs
-	
+
 	int32_t nshift = cxmax(0,(info_ptr->bit_depth>>3)-1)<<3;
 
 	if (info_ptr->num_trans!=0){ //palette transparency
@@ -350,7 +350,7 @@ bool CxImagePNG::Encode(CxFile *hFile)
 		png_destroy_write_struct(&png_ptr,  (png_infopp)&info_ptr);
 		cx_throw("Error saving PNG file");
 	}
-            
+
 	/* set up the output control */
 	//png_init_io(png_ptr, hFile);
 
@@ -467,7 +467,7 @@ bool CxImagePNG::Encode(CxFile *hFile)
 		info_ptr->num_palette = (png_uint_16) nc;
 		for (int32_t i=0; i<nc; i++)
 			GetPaletteColor(i, &info_ptr->palette[i].red, &info_ptr->palette[i].green, &info_ptr->palette[i].blue);
-	}  
+	}
 
 #if CXIMAGE_SUPPORT_ALPHA	// <vho>
 	//Merge the transparent color with the alpha channel

@@ -57,7 +57,7 @@ bool CxImage::Threshold(CxImage* pThresholdMask)
 	if (head.biBitCount == 1) return true;
 
 	if (!pThresholdMask) return false;
-	
+
 	if (!pThresholdMask->IsValid() ||
 		!pThresholdMask->IsGrayScale() ||
 		pThresholdMask->GetWidth() != GetWidth() ||
@@ -142,7 +142,7 @@ bool CxImage::Threshold2(uint8_t level, bool bDirection, RGBQUAD nBkgndColor, bo
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract RGB channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract RGB channels from the image. Each channel is an 8 bit grayscale image.
  * \param r,g,b: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -184,7 +184,7 @@ bool CxImage::SplitRGB(CxImage* r,CxImage* g,CxImage* b)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract CMYK channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract CMYK channels from the image. Each channel is an 8 bit grayscale image.
  * \param c,m,y,k: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -223,7 +223,7 @@ bool CxImage::SplitCMYK(CxImage* c,CxImage* m,CxImage* y,CxImage* k)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract YUV channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract YUV channels from the image. Each channel is an 8 bit grayscale image.
  * \param y,u,v: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -258,7 +258,7 @@ bool CxImage::SplitYUV(CxImage* y,CxImage* u,CxImage* v)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract YIQ channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract YIQ channels from the image. Each channel is an 8 bit grayscale image.
  * \param y,i,q: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -293,7 +293,7 @@ bool CxImage::SplitYIQ(CxImage* y,CxImage* i,CxImage* q)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract XYZ channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract XYZ channels from the image. Each channel is an 8 bit grayscale image.
  * \param x,y,z: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -328,7 +328,7 @@ bool CxImage::SplitXYZ(CxImage* x,CxImage* y,CxImage* z)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Extract HSL channels from the image. Each channel is an 8 bit grayscale image. 
+ * Extract HSL channels from the image. Each channel is an 8 bit grayscale image.
  * \param h,s,l: pointers to CxImage objects, to store the splited channels
  * \return true if everything is ok
  */
@@ -448,7 +448,7 @@ RGBQUAD CxImage::HSLtoRGB(COLORREF cHSLColor)
 }
 ////////////////////////////////////////////////////////////////////////////////
 RGBQUAD CxImage::HSLtoRGB(RGBQUAD lHSLColor)
-{ 
+{
 	//<F. Livraghi> fixed implementation for HSL2RGB routine
 	float h,s,l;
 	float m1,m2;
@@ -692,7 +692,7 @@ bool CxImage::Colorize(uint8_t hue, uint8_t sat, float blend)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Changes the brightness and the contrast of the image. 
+ * Changes the brightness and the contrast of the image.
  * \param brightness: can be from -255 to 255, if brightness is negative, the image becomes dark.
  * \param contrast: can be from -100 to 100, the neutral value is 0.
  * \return true if everything is ok
@@ -798,7 +798,7 @@ bool CxImage::Filter(int32_t* kernel, int32_t Ksize, int32_t Kfactor, int32_t Ko
 	if ((head.biBitCount==8) && IsGrayScale())
 	{
 		uint8_t* cPtr;
-		uint8_t* cPtr2;      
+		uint8_t* cPtr2;
 		int32_t iCount;
 		int32_t iY, iY2, iY1;
 		cPtr = info.pImage;
@@ -1159,9 +1159,9 @@ void CxImage::Mix(CxImage & imgsrc2, ImageOpType op, int32_t lXOffset, int32_t l
 							rgbDest = rgb2;
 						break;
 					case OpScreen:
-						{ 
-							uint8_t a,a1; 
-							
+						{
+							uint8_t a,a1;
+
 							if (imgsrc2.IsTransparent(lX+lXOffset,lY+lYOffset)){
 								a=0;
 #if CXIMAGE_SUPPORT_ALPHA
@@ -1173,20 +1173,20 @@ void CxImage::Mix(CxImage & imgsrc2, ImageOpType op, int32_t lXOffset, int32_t l
 								a=255;
 							}
 
-							if (a==0){ //transparent 
-								rgbDest = rgb1; 
-							} else if (a==255){ //opaque 
-								rgbDest = rgb2; 
-							} else { //blend 
-								a1 = (uint8_t)~a; 
-								rgbDest.rgbBlue = (uint8_t)((rgb1.rgbBlue*a1+rgb2.rgbBlue*a)/255); 
-								rgbDest.rgbGreen = (uint8_t)((rgb1.rgbGreen*a1+rgb2.rgbGreen*a)/255); 
-								rgbDest.rgbRed = (uint8_t)((rgb1.rgbRed*a1+rgb2.rgbRed*a)/255);  
+							if (a==0){ //transparent
+								rgbDest = rgb1;
+							} else if (a==255){ //opaque
+								rgbDest = rgb2;
+							} else { //blend
+								a1 = (uint8_t)~a;
+								rgbDest.rgbBlue = (uint8_t)((rgb1.rgbBlue*a1+rgb2.rgbBlue*a)/255);
+								rgbDest.rgbGreen = (uint8_t)((rgb1.rgbGreen*a1+rgb2.rgbGreen*a)/255);
+								rgbDest.rgbRed = (uint8_t)((rgb1.rgbRed*a1+rgb2.rgbRed*a)/255);
 							}
 
 							if (bEditAlpha) rgbDest.rgbReserved = (uint8_t)((rgb1.rgbReserved*a)/255);
-						} 
-						break; 
+						}
+						break;
 					case OpSrcBlend:
 						if(IsTransparent(lX,lY))
 							rgbDest = rgb2;
@@ -1222,16 +1222,16 @@ void CxImage::Mix(CxImage & imgsrc2, ImageOpType op, int32_t lXOffset, int32_t l
 							if( (rgb1.rgbReserved < 5) || (rgb2.rgbReserved > 250) ){
 								rgbDest = rgb2;
 							} else {
-								// Alpha Blending with associative calculation merge 
+								// Alpha Blending with associative calculation merge
 								// (http://en.wikipedia.org/wiki/Alpha_compositing)
 								int32_t a0,a1,a2;
 								// Transparency of the superimposed image
 								a2 = rgb2.rgbReserved;
 								// Calculation transparency of the underlying image
-								a1 = (rgb1.rgbReserved * (255 - a2)) >> 8; 
+								a1 = (rgb1.rgbReserved * (255 - a2)) >> 8;
 								// total transparency of the new pixel
 								a0 = a2 + a1;
-								// New transparency assume (a0 == 0 is the restriction s.o. (range 5-250) intercepted) 
+								// New transparency assume (a0 == 0 is the restriction s.o. (range 5-250) intercepted)
 								if (bEditAlpha) rgbDest.rgbReserved = a0;
 								// each color channel to calculate
 								rgbDest.rgbBlue		= (char)((rgb2.rgbBlue	* a2	+ a1 * rgb1.rgbBlue	)/a0);
@@ -1271,7 +1271,7 @@ void CxImage::MixFrom(CxImage & imagesrc2, int32_t lXOffset, int32_t lYOffset)
 	} else { //no transparency so just set it <Matt>
 		for(x = 0; x < width; x++) {
 			for(y = 0; y < height; y++) {
-				SetPixelColor(x + lXOffset, y + lYOffset, imagesrc2.BlindGetPixelColor(x, y)); 
+				SetPixelColor(x + lXOffset, y + lYOffset, imagesrc2.BlindGetPixelColor(x, y));
 			}
 		}
 	}
@@ -1519,7 +1519,7 @@ bool CxImage::FFT2(CxImage* srcReal, CxImage* srcImag, CxImage* dstReal, CxImage
 	//if bForceFFT, width AND height must be powers of 2
 	if (bForceFFT && !(bXpow2 && bYpow2)) {
 		int32_t i;
-		
+
 		i=0;
 		while((1<<i)<w) i++;
 		w=1<<i;
@@ -1564,7 +1564,7 @@ bool CxImage::FFT2(CxImage* srcReal, CxImage* srcImag, CxImage* dstReal, CxImage
 		return false;
 	}
 
-	//resample for FFT, if necessary 
+	//resample for FFT, if necessary
 	tmpReal->Resample(w,h,0);
 	tmpImag->Resample(w,h,0);
 
@@ -1686,13 +1686,13 @@ bool CxImage::IsPowerof2(int32_t x)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
-   This computes an in-place complex-to-complex FFT 
+   This computes an in-place complex-to-complex FFT
    x and y are the real and imaginary arrays of n=2^m points.
    o(n)=n*log2(n)
    dir =  1 gives forward transform
-   dir = -1 gives reverse transform 
+   dir = -1 gives reverse transform
    Written by Paul Bourke, July 1998
-   FFT algorithm by Cooley and Tukey, 1965 
+   FFT algorithm by Cooley and Tukey, 1965
 */
 bool CxImage::FFT(int32_t dir,int32_t m,double *x,double *y)
 {
@@ -1764,14 +1764,14 @@ bool CxImage::FFT(int32_t dir,int32_t m,double *x,double *y)
 ////////////////////////////////////////////////////////////////////////////////
 /**
    Direct fourier transform o(n)=n^2
-   Written by Paul Bourke, July 1998 
+   Written by Paul Bourke, July 1998
 */
 bool CxImage::DFT(int32_t dir,int32_t m,double *x1,double *y1,double *x2,double *y2)
 {
    int32_t i,k;
    double arg;
    double cosarg,sinarg;
-   
+
    for (i=0;i<m;i++) {
       x2[i] = 0;
       y2[i] = 0;
@@ -1783,7 +1783,7 @@ bool CxImage::DFT(int32_t dir,int32_t m,double *x1,double *y1,double *x2,double 
          y2[i] += (x1[k] * sinarg + y1[k] * cosarg);
       }
    }
-   
+
    /* Copy the data back */
    if (dir == 1) {
       for (i=0;i<m;i++) {
@@ -1796,7 +1796,7 @@ bool CxImage::DFT(int32_t dir,int32_t m,double *x1,double *y1,double *x2,double 
          y1[i] = y2[i];
       }
    }
-   
+
    return true;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -1804,7 +1804,7 @@ bool CxImage::DFT(int32_t dir,int32_t m,double *x1,double *y1,double *x2,double 
  * Combines different color components into a single image
  * \param r,g,b: color channels
  * \param a: alpha layer, can be NULL
- * \param colorspace: 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ 
+ * \param colorspace: 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ
  * \return true if everything is ok
  */
 bool CxImage::Combine(CxImage* r,CxImage* g,CxImage* b,CxImage* a, int32_t colorspace)
@@ -1862,7 +1862,7 @@ bool CxImage::Combine(CxImage* r,CxImage* g,CxImage* b,CxImage* a, int32_t color
  * Smart blurring to remove small defects, dithering or artifacts.
  * \param radius: normally between 0.01 and 0.5
  * \param niterations: should be trimmed with radius, to avoid blurring should be (radius*niterations)<1
- * \param colorspace: 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ 
+ * \param colorspace: 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ
  * \return true if everything is ok
  */
 bool CxImage::Repair(float radius, int32_t niterations, int32_t colorspace)
@@ -1894,7 +1894,7 @@ bool CxImage::Repair(float radius, int32_t niterations, int32_t colorspace)
 	default:
 		SplitRGB(&r,&g,&b);
 	}
-	
+
 	for (int32_t i=0; i<niterations; i++){
 		RepairChannel(&r,radius);
 		RepairChannel(&g,radius);
@@ -2116,8 +2116,8 @@ bool CxImage::Jitter(int32_t radius)
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////
-/** 
- * generates a 1-D convolution matrix to be used for each pass of 
+/**
+ * generates a 1-D convolution matrix to be used for each pass of
  * a two-pass gaussian blur.  Returns the length of the matrix.
  * \author [nipper]
  */
@@ -2129,7 +2129,7 @@ int32_t CxImage::gen_convolve_matrix (float radius, float **cmatrix_p)
 	int32_t i,j;
 	float std_dev;
 	float sum;
-	
+
 	/* we want to generate a matrix that goes out a certain radius
 	* from the center, so we have to go out ceil(rad-0.5) pixels,
 	* inlcuding the center pixel.  Of course, that's only in one direction,
@@ -2142,24 +2142,24 @@ int32_t CxImage::gen_convolve_matrix (float radius, float **cmatrix_p)
 	* <DP> modified scaling, so that matrix_lenght = 1+2*radius parameter
 	*/
 	radius = (float)fabs(0.5*radius) + 0.25f;
-	
+
 	std_dev = radius;
 	radius = std_dev * 2;
-	
+
 	/* go out 'radius' in each direction */
 	matrix_length = int32_t (2 * ceil(radius-0.5) + 1);
 	if (matrix_length <= 0) matrix_length = 1;
 	matrix_midpoint = matrix_length/2 + 1;
 	*cmatrix_p = new float[matrix_length];
 	cmatrix = *cmatrix_p;
-	
+
 	/*  Now we fill the matrix by doing a numeric integration approximation
 	* from -2*std_dev to 2*std_dev, sampling 50 points per pixel.
 	* We do the bottom half, mirror it to the top half, then compute the
 	* center point.  Otherwise asymmetric quantization errors will occur.
 	*  The formula to integrate is e^-(x^2/2s^2).
 	*/
-	
+
 	/* first we do the top (right) half of matrix */
 	for (i = matrix_length/2 + 1; i < matrix_length; i++)
     {
@@ -2167,18 +2167,18 @@ int32_t CxImage::gen_convolve_matrix (float radius, float **cmatrix_p)
 		sum = 0;
 		for (j = 1; j <= 50; j++)
 		{
-			if ( base_x+0.02*j <= radius ) 
-				sum += (float)exp (-(base_x+0.02*j)*(base_x+0.02*j) / 
+			if ( base_x+0.02*j <= radius )
+				sum += (float)exp (-(base_x+0.02*j)*(base_x+0.02*j) /
 				(2*std_dev*std_dev));
 		}
 		cmatrix[i] = sum/50;
     }
-	
+
 	/* mirror the thing to the bottom half */
 	for (i=0; i<=matrix_length/2; i++) {
 		cmatrix[i] = cmatrix[matrix_length-1-i];
 	}
-	
+
 	/* find center val -- calculate an odd number of quanta to make it symmetric,
 	* even if the center point is weighted slightly higher than others. */
 	sum = 0;
@@ -2188,12 +2188,12 @@ int32_t CxImage::gen_convolve_matrix (float radius, float **cmatrix_p)
 			(2*std_dev*std_dev));
     }
 	cmatrix[matrix_length/2] = sum/51;
-	
+
 	/* normalize the distribution by scaling the total sum to one */
 	sum=0;
 	for (i=0; i<matrix_length; i++) sum += cmatrix[i];
 	for (i=0; i<matrix_length; i++) cmatrix[i] = cmatrix[i] / sum;
-	
+
 	return matrix_length;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -2209,7 +2209,7 @@ float* CxImage::gen_lookup_table (float *cmatrix, int32_t cmatrix_length)
 	float* lookup_table = new float[cmatrix_length * 256];
 	float* lookup_table_p = lookup_table;
 	float* cmatrix_p      = cmatrix;
-	
+
 	for (int32_t i=0; i<cmatrix_length; i++)
     {
 		for (int32_t j=0; j<256; j++)
@@ -2218,7 +2218,7 @@ float* CxImage::gen_lookup_table (float *cmatrix, int32_t cmatrix_length)
 		}
 		cmatrix_p++;
     }
-	
+
 	return lookup_table;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -2235,13 +2235,13 @@ void CxImage::blur_line (float *ctable, float *cmatrix, int32_t cmatrix_length, 
 	int32_t i=0, j=0;
 	int32_t row;
 	int32_t cmatrix_middle = cmatrix_length/2;
-	
+
 	float *cmatrix_p;
 	uint8_t  *cur_col_p;
 	uint8_t  *cur_col_p1;
 	uint8_t  *dest_col_p;
 	float *ctable_p;
-	
+
 	/* this first block is the same as the non-optimized version --
 	* it is only used for very small pictures, so speed isn't a
 	* big concern.
@@ -2312,7 +2312,7 @@ void CxImage::blur_line (float *ctable, float *cmatrix, int32_t cmatrix_length, 
 				*(dest_col_p++) = (uint8_t)(0.5f + sum);
 			}
 		}
-		
+
 		/* for the edge condition , we only use available info, and scale to one */
 		for (; row < y; row++)
 		{
@@ -2747,7 +2747,7 @@ bool CxImage::UnsharpMask(float radius /*= 5.0*/, float amount /*= 0.5*/, int32_
 
 	double dbScaler = 100.0/(ymax-ymin);
 	int32_t bypp = head.biBitCount>>3;
-	
+
 	// merge the source and destination (which currently contains
 	// the blurred version) images
     for (int32_t y=ymin; y<ymax; y++)
@@ -2791,7 +2791,7 @@ bool CxImage::UnsharpMask(float radius /*= 5.0*/, float amount /*= 0.5*/, int32_
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Apply a look up table to the image. 
+ * Apply a look up table to the image.
  * \param pLut: uint8_t[256] look up table
  * \return true if everything is ok
  */
@@ -2932,7 +2932,7 @@ bool CxImage::Lut(uint8_t* pLutR, uint8_t* pLutG, uint8_t* pLutB, uint8_t* pLutA
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Use the RedEyeRemove function to remove the red-eye effect that frequently
- * occurs in photographs of humans and animals. You must select the region 
+ * occurs in photographs of humans and animals. You must select the region
  * where the function will filter the red channel.
  * \param strength: range from 0.0f (no effect) to 1.0f (full effect). Default = 0.8
  * \return true if everything is ok
@@ -2977,7 +2977,7 @@ bool CxImage::RedEyeRemove(float strength)
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Changes the saturation of the image. 
+ * Changes the saturation of the image.
  * \param saturation: can be from -100 to 100, positive values increase the saturation.
  * \param colorspace: can be 1 (HSL) or 2 (YUV).
  * \return true if everything is ok
@@ -3142,7 +3142,7 @@ bool CxImage::Solarize(uint8_t level, bool bLinkedChannels)
 				info.nBkgndColor.rgbBlue = (uint8_t)(255-info.nBkgndColor.rgbBlue);
 				info.nBkgndColor.rgbGreen = (uint8_t)(255-info.nBkgndColor.rgbGreen);
 				info.nBkgndColor.rgbRed = (uint8_t)(255-info.nBkgndColor.rgbRed);
-			} 
+			}
 		} else {
 			if (info.nBkgndColor.rgbBlue>level)	 info.nBkgndColor.rgbBlue = (uint8_t)(255-info.nBkgndColor.rgbBlue);
 			if (info.nBkgndColor.rgbGreen>level) info.nBkgndColor.rgbGreen = (uint8_t)(255-info.nBkgndColor.rgbGreen);
@@ -3156,8 +3156,8 @@ bool CxImage::Solarize(uint8_t level, bool bLinkedChannels)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * Converts the RGB triplets to and from different colorspace
- * \param dstColorSpace: destination colorspace; 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ 
- * \param srcColorSpace: source colorspace; 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ 
+ * \param dstColorSpace: destination colorspace; 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ
+ * \param srcColorSpace: source colorspace; 0 = RGB, 1 = HSL, 2 = YUV, 3 = YIQ, 4 = XYZ
  * \return true if everything is ok
  */
 bool CxImage::ConvertColorSpace(const int32_t dstColorSpace, const int32_t srcColorSpace)
@@ -3266,7 +3266,7 @@ int32_t  CxImage::OptimalThreshold(int32_t method, RECT * pBox, CxImage* pContra
 		xmin = ymin = 0;
 		xmax = head.biWidth; ymax=head.biHeight;
 	}
-	
+
 	if (xmin>=xmax || ymin>=ymax)
 		return -1;
 
@@ -3419,7 +3419,7 @@ int32_t  CxImage::OptimalThreshold(int32_t method, RECT * pBox, CxImage* pContra
 
 	if (threshold <= gray_min || threshold >= gray_max)
 		threshold = (gray_min+gray_max)/2;
-	
+
 	return threshold;
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -3504,8 +3504,8 @@ bool CxImage::Trace(RGBQUAD color_target, RGBQUAD color_trace)
 	if (!pDib) return false;
 
 	RGBQUAD color;
-	bool bFindStartPoint; 
-	POINT StartPoint,CurrentPoint; 
+	bool bFindStartPoint;
+	POINT StartPoint,CurrentPoint;
 	int32_t Direction[8][2]={{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}, {0,1},{1,1}};
 	int8_t nFindPoint,nDirection;
 	int32_t x,y;
@@ -3532,7 +3532,7 @@ bool CxImage::Trace(RGBQUAD color_target, RGBQUAD color_trace)
 			{
 				bFindStartPoint = true;
 				CurrentPoint.x = StartPoint.x = x;
-				CurrentPoint.y = StartPoint.y = y; 
+				CurrentPoint.y = StartPoint.y = y;
 			}
 		}
 	}
@@ -3545,8 +3545,8 @@ bool CxImage::Trace(RGBQUAD color_target, RGBQUAD color_trace)
 		color = GetPixelColor(x,y);
 		if (IsInside(x,y) &&
 			color.rgbRed   == color_target.rgbRed   &&
-			color.rgbGreen == color_target.rgbGreen && 
-			color.rgbBlue  == color_target.rgbBlue  ) 
+			color.rgbGreen == color_target.rgbGreen &&
+			color.rgbBlue  == color_target.rgbBlue  )
 		{
 			CurrentPoint.x = x;
 			CurrentPoint.y = y;
@@ -3576,7 +3576,7 @@ bool CxImage::Trace(RGBQUAD color_target, RGBQUAD color_trace)
 	return true;
 }
 
-#ifndef __MINGW32__ 
+#ifndef __MINGW32__
 ////////////////////////////////////////////////////////////////////////////////
 #include <queue>
 ////////////////////////////////////////////////////////////////////////////////

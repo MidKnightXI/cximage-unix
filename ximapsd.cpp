@@ -49,17 +49,17 @@ namespace MyPSD
 			//		1		Grayscale		The first value in the color data is the gray value, from 0...10000.
 			//		2		Indexed
 			//		3		RGB				The first three values in the color data are red, green, and blue.
-			//								They are full unsigned 16–bit values as in Apple’s RGBColor data
+			//								They are full unsigned 16ï¿½bit values as in Appleï¿½s RGBColor data
 			//								structure. Pure red=65535,0,0.
 			//		4		CMYK			The four values in the color data are cyan, magenta, yellow, and
-			//								black. They are full unsigned 16–bit values. 0=100% ink. Pure
+			//								black. They are full unsigned 16ï¿½bit values. 0=100% ink. Pure
 			//								cyan=0,65535,65535,65535.
 			//		7		Multichannel	// Have no idea
 			//		8		Duotone
 			//		9		Lab				The first three values in the color data are lightness, a chrominance,
 			//								and b chrominance.
-			//								Lightness is a 16–bit value from 0...100. The chromanance components
-			//								are each 16–bit values from –128...127. Gray values
+			//								Lightness is a 16ï¿½bit value from 0...100. The chromanance components
+			//								are each 16ï¿½bit values from ï¿½128...127. Gray values
 			//								are represented by chrominance components of 0. Pure
 			//								white=100,0,0.
 			short nChannels;
@@ -80,7 +80,7 @@ namespace MyPSD
 
 		struct IMAGE_RESOURCE
 		{
-			// Table 2–1: Image resource block
+			// Table 2ï¿½1: Image resource block
 			//	Type		Name	Description
 			//-------------------------------------------
 			//	OSType		Type	Photoshop always uses its signature, 8BIM
@@ -140,18 +140,18 @@ namespace MyPSD
 			//	Color-ID	Name	Description
 			//-------------------------------------------
 			//		0		RGB			The first three values in the color data are red, green, and blue.
-			//							They are full unsigned 16–bit values as in Apple’s RGBColor data
+			//							They are full unsigned 16ï¿½bit values as in Appleï¿½s RGBColor data
 			//							structure. Pure red=65535,0,0.
 			//		1		HSB			The first three values in the color data are hue, saturation, and
-			//							brightness. They are full unsigned 16–bit values as in Apple’s
+			//							brightness. They are full unsigned 16ï¿½bit values as in Appleï¿½s
 			//							HSVColor data structure. Pure red=0,65535, 65535.
 			//		2		CMYK		The four values in the color data are cyan, magenta, yellow, and
-			//							black. They are full unsigned 16–bit values. 0=100% ink. Pure
+			//							black. They are full unsigned 16ï¿½bit values. 0=100% ink. Pure
 			//							cyan=0,65535,65535,65535.
 			//		7		Lab			The first three values in the color data are lightness, a chrominance,
 			//							and b chrominance.
-			//							Lightness is a 16–bit value from 0...10000. The chromanance components
-			//							are each 16–bit values from –12800...12700. Gray values
+			//							Lightness is a 16ï¿½bit value from 0...10000. The chromanance components
+			//							are each 16ï¿½bit values from ï¿½12800...12700. Gray values
 			//							are represented by chrominance components of 0. Pure
 			//							white=10000,0,0.
 			//		8		grayscale	The first value in the color data is the gray value, from 0...10000.
@@ -171,7 +171,7 @@ namespace MyPSD
 			// thumbnail information in the same format except the data section is
 			// (blue, green, red). The Adobe Photoshop 4.0 format is at resource ID
 			// and the Adobe Photoshop 5.0 format is at resource ID 1036.
-			// Table 2–5: Thumnail resource header
+			// Table 2ï¿½5: Thumnail resource header
 			//	Type		Name		Description
 			//-------------------------------------------
 			//	4 bytes		format			= 1 (kJpegRGB). Also supports kRawRGB (0).
@@ -263,7 +263,7 @@ namespace MyPSD
 
 inline int dti(double value) { return (int)floor(value+.5f); }
 
-#define assert(a) 
+#define assert(a)
 
 #define mypsd_fread(a, b, c, d) d.Read(a, b, c)
 #define mypsd_fseek(a, b, c) a.Seek(b, c)
@@ -381,7 +381,7 @@ namespace MyPSD
 		G = dti( ( 1.0f - ( M *( 1.0f - K ) + K ) ) * 255.0f );
 		B = dti( ( 1.0f - ( Y *( 1.0f - K ) + K ) ) * 255.0f );
 	};
-	
+
 	bool CPSD::ReadLayerAndMaskInfoSection(CxFile &pFile)	// Actually ignore it
 	{
 		bool bSuccess = false;
@@ -612,7 +612,7 @@ namespace MyPSD
 							}
 							else if ( 1036 == image_resource.nID )
 							{
-								// In RGB format										
+								// In RGB format
 								for (int n = 0; n < nTotalData; ++n )
 								{
 									nItemsRead = (int)mypsd_fread(&c, sizeof(BYTE), 1, pFile);
@@ -668,7 +668,7 @@ namespace MyPSD
 		// for all other modes this section is 4 bytes length, the length field is set to zero
 
 		// For indexed color images, the length will be equal to 768, and the color
-		// will contain the color table for the image, in non–interleaved order.
+		// will contain the color table for the image, in nonï¿½interleaved order.
 
 		// For duotone images, the color data will contain the duotone specification,
 		// the format of which is not documented. Other applications that read
@@ -771,7 +771,7 @@ namespace MyPSD
 					pDst[0] = pDst[1] = pDst[2] = pSrc[0];
 					if (bAlpha) pDst[3] = pSrc[1];
 				}
-				
+
 				m_image.CreateFromArray(pRGBA, header_info.nWidth, header_info.nHeight, bAlpha ? 32 : 24, header_info.nWidth * (bAlpha ? 4 : 3), true);
 
 				delete [] pRGBA;
@@ -820,7 +820,7 @@ namespace MyPSD
 					M = (1.0 - (double)pSrc[1] / 256);
 					Y = (1.0 - (double)pSrc[2] / 256);
 					K = (1.0 - (double)pSrc[3] / 256);
-					
+
 					CMYKToRGB(C, M, Y, K, nRed, nGreen, nBlue);
 
 					if (0 > nRed) nRed = 0;		else if (255 < nRed) nRed = 255;
@@ -909,7 +909,7 @@ namespace MyPSD
 		return Load(f);
 	}
 
-	int CPSD::Load(CxFile &f)	
+	int CPSD::Load(CxFile &f)
 	{
 		if (!ReadHeader(f, header_info)) return -2; // Error in header
 		if (!ReadColourModeData(f, colour_mode_data)) return -3; // Error in ColourMode Data
@@ -1231,7 +1231,7 @@ bool CxImagePSD::Decode(CxFile *hFile)
 	context->stream.file_length = hFile->Size();
 	context->load_tag = psd_load_tag_all;
 	status = psd_main_loop(context);
-	
+
 	if(status != psd_status_done){
 		cx_throw("CxImagePSD: psd_main_loop failed");
 	}

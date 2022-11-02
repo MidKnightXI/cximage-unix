@@ -236,7 +236,7 @@ bool CxImage::HistogramStretch(int32_t method, double threshold)
 				lutG[x] = (uint8_t)cxmax(0, cxmin(255, (255 * (x - minG) / range)));
 			}
 		} else lutG[minG] = minG;
-			
+
 		uint8_t lutB[256];
 		range = maxB - minB;
 		if (range != 0)	{
@@ -329,7 +329,7 @@ bool CxImage::HistogramEqualize()
 	memset( &histogram, 0, sizeof(int32_t) * 256 );
 	memset( &map, 0, sizeof(int32_t) * 256 );
 	memset( &equalize_map, 0, sizeof(int32_t) * 256 );
- 
+
      // form histogram
 	for(y=0; y < head.biHeight; y++){
 		info.nProgress = (int32_t)(50*y/head.biHeight);
@@ -345,7 +345,7 @@ bool CxImage::HistogramEqualize()
 	j = 0;
 	for(i=0; i <= 255; i++){
 		j += histogram[i];
-		map[i] = j; 
+		map[i] = j;
 	}
 
 	// equalize
@@ -403,7 +403,7 @@ bool CxImage::HistogramNormalize()
 
 	memset( &histogram, 0, sizeof( int32_t ) * 256 );
 	memset( &normalize_map, 0, sizeof( uint32_t ) * 256 );
- 
+
      // form histogram
 	for(y=0; y < head.biHeight; y++){
 		info.nProgress = (int32_t)(50*y/head.biHeight);
@@ -530,7 +530,7 @@ bool CxImage::HistogramLog()
 
 				color = BlindGetPixelColor( x, y );
 				yuvClr = RGBtoYUV( color );
-                
+
 				yuvClr.rgbRed = (uint8_t)(k * ::log( 1.0 + (double)yuvClr.rgbRed ) );
 
 				color = YUVtoRGB( yuvClr );
@@ -544,12 +544,12 @@ bool CxImage::HistogramLog()
 			yuvClr = RGBtoYUV( color );
 
             yuvClr.rgbRed = (uint8_t)(k * ::log( 1.0 + (double)yuvClr.rgbRed ) );
-			
+
 			color = YUVtoRGB( yuvClr );
  			SetPaletteColor( (uint8_t)i, color );
 		}
 	}
- 
+
 	return true;
 }
 
@@ -620,7 +620,7 @@ bool CxImage::HistogramRoot()
  			SetPaletteColor( (uint8_t)i, color );
 		}
 	}
- 
+
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////

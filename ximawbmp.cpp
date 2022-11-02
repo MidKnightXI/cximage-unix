@@ -35,7 +35,7 @@ bool CxImageWBMP::Decode(CxFile *hFile)
 		cx_throw("Not a WBMP");
 
 	if (wbmpHead.Type != 0)
-		cx_throw("Unsupported WBMP type");			
+		cx_throw("Unsupported WBMP type");
 
 	head.biWidth = wbmpHead.ImageWidth;
 	head.biHeight= wbmpHead.ImageHeight;

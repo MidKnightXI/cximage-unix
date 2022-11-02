@@ -3,7 +3,7 @@
  * Purpose:	Platform Independent RAW Image Class Loader
  * 16/Dec/2007 Davide Pizzolato - www.xdp.it
  * CxImage version 7.0.1 07/Jan/2011
- * 
+ *
  * CxImageRAW (c) May/2006 pdw63
  *
  * based on dcraw.c -- Dave Coffin's raw photo decoder
@@ -53,7 +53,7 @@ bool CxImageRAW::Decode(CxFile *hFile)
 
 	// check file header
 	dcr_identify(&dcr);
-	
+
 	if(!dcr.is_raw){
 		cx_throw("CxImageRAW: not a raw image");
 	}
@@ -221,11 +221,11 @@ bool CxImageRAW::Decode(CxFile *hFile)
 
 #if CXIMAGE_SUPPORT_EXIF
 bool CxImageRAW::GetExifThumbnail(const TCHAR *filename, const TCHAR *outname, int32_t type)
-{	
+{
 	DCRAW  dcr;
 
 	CxIOFile file;
-	if (!file.Open(filename, _T("rb"))) 
+	if (!file.Open(filename, _T("rb")))
 		return false;
 
   cx_try

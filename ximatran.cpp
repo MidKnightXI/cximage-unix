@@ -322,10 +322,10 @@ bool CxImage::RotateLeft(CxImage* iDst)
 #endif
 
 	int32_t x,x2,y,dlineup;
-	
+
 	// Speedy rotate for BW images <Robert Abram>
 	if (head.biBitCount == 1) {
-	
+
 		uint8_t *sbits, *dbits, *dbitsmax, bitpos, *nrow,*srcdisp;
 		ldiv_t div_r;
 
@@ -337,7 +337,7 @@ bool CxImage::RotateLeft(CxImage* iDst)
 		for (y = 0; y < head.biHeight; y++) {
 			// Figure out the Column we are going to be copying to
 			div_r = ldiv(y + dlineup, (int32_t)8);
-			// set bit pos of src column byte				
+			// set bit pos of src column byte
 			bitpos = (uint8_t)(1 << div_r.rem);
 			srcdisp = bsrc + y * info.dwEffWidth;
 			for (x = 0; x < (int32_t)info.dwEffWidth; x++) {
@@ -388,7 +388,7 @@ bool CxImage::RotateLeft(CxImage* iDst)
 	//CPUs (tested on Athlon XP and Celeron D). Larger value (if CPU has enough cache) will increase
 	//speed somehow, but once you drop out of CPU's cache, things will slow down drastically.
 	//For older CPUs with less cache, lower value would yield better results.
-		
+
 		uint8_t *srcPtr, *dstPtr;                        //source and destionation for 24-bit version
 		int32_t xs, ys;                                   //x-segment and y-segment
 		for (xs = 0; xs < newWidth; xs+=RBLOCK) {       //for all image blocks of RBLOCK*RBLOCK pixels
@@ -478,7 +478,7 @@ bool CxImage::RotateRight(CxImage* iDst)
 	int32_t x,y,y2;
 	// Speedy rotate for BW images <Robert Abram>
 	if (head.biBitCount == 1) {
-	
+
 		uint8_t *sbits, *dbits, *dbitsmax, bitpos, *nrow,*srcdisp;
 		ldiv_t div_r;
 
@@ -489,7 +489,7 @@ bool CxImage::RotateRight(CxImage* iDst)
 		for (y = 0; y < head.biHeight; y++) {
 			// Figure out the Column we are going to be copying to
 			div_r = ldiv(y, (int32_t)8);
-			// set bit pos of src column byte				
+			// set bit pos of src column byte
 			bitpos = (uint8_t)(128 >> div_r.rem);
 			srcdisp = bsrc + y * info.dwEffWidth;
 			for (x = 0; x < (int32_t)info.dwEffWidth; x++) {
@@ -789,7 +789,7 @@ bool CxImage::Rotate(float angle, CxImage* iDst)
  * Rotates image around it's center.
  * Method can use interpolation with paletted images, but does not change pallete, so results vary.
  * (If you have only four colours in a palette, there's not much room for interpolation.)
- * 
+ *
  * \param  angle - angle in degrees (positive values rotate clockwise)
  * \param  *iDst - destination image (if null, this image is changed)
  * \param  inMethod - interpolation method used
@@ -804,10 +804,10 @@ bool CxImage::Rotate(float angle, CxImage* iDst)
  *
  * \author ***bd*** 2.2004
  */
-bool CxImage::Rotate2(float angle, 
-                       CxImage *iDst, 
-                       InterpolationMethod inMethod, 
-                       OverflowMethod ofMethod, 
+bool CxImage::Rotate2(float angle,
+                       CxImage *iDst,
+                       InterpolationMethod inMethod,
+                       OverflowMethod ofMethod,
                        RGBQUAD *replColor,
                        bool const optimizeRightAngles,
 					   bool const bKeepOriginalSize)
@@ -820,7 +820,7 @@ bool CxImage::Rotate2(float angle,
 	double ang = -angle*acos(0.0f)/90.0f;		//convert angle to radians and invert (positive angle performs clockwise rotation)
 	float cos_angle = (float) cos(ang);			//these two are needed later (to rotate)
 	float sin_angle = (float) sin(ang);
-	
+
 	//Calculate the size of the new bitmap (rotate corners of image)
 	CxPoint2 p[4];								//original corners of the image
 	p[0]=CxPoint2(-0.5f,-0.5f);
@@ -839,16 +839,16 @@ bool CxImage::Rotate2(float angle,
 			newp[i].x = (p[i].x*cos_angle - p[i].y*sin_angle);
 			newp[i].y = (p[i].x*sin_angle + p[i].y*cos_angle);
 		}//for i
-		
-		if (optimizeRightAngles) { 
+
+		if (optimizeRightAngles) {
 			//For rotations of 90, -90 or 180 or 0 degrees, call faster routines
-			if (newp[3].Distance(CxPoint2(GetHeight()-0.5f, 0.5f-GetWidth())) < 0.25) 
+			if (newp[3].Distance(CxPoint2(GetHeight()-0.5f, 0.5f-GetWidth())) < 0.25)
 				//rotation right for circa 90 degrees (diagonal pixels less than 0.25 pixel away from 90 degree rotation destination)
 				return RotateRight(iDst);
-			if (newp[3].Distance(CxPoint2(0.5f-GetHeight(), -0.5f+GetWidth())) < 0.25) 
+			if (newp[3].Distance(CxPoint2(0.5f-GetHeight(), -0.5f+GetWidth())) < 0.25)
 				//rotation left for ~90 degrees
 				return RotateLeft(iDst);
-			if (newp[3].Distance(CxPoint2(0.5f-GetWidth(), 0.5f-GetHeight())) < 0.25) 
+			if (newp[3].Distance(CxPoint2(0.5f-GetWidth(), 0.5f-GetHeight())) < 0.25)
 				//rotation left for ~180 degrees
 				return Rotate180(iDst);
 			if (newp[3].Distance(p[3]) < 0.25) {
@@ -884,18 +884,18 @@ bool CxImage::Rotate2(float angle,
 #if CXIMAGE_SUPPORT_ALPHA
 	if(AlphaIsValid()) imgDest.AlphaCreate(); //MTA: Fix for rotation problem when the image has an alpha channel
 #endif //CXIMAGE_SUPPORT_ALPHA
-	
+
 	RGBQUAD rgb;			//pixel colour
 	RGBQUAD rc;
-	if (replColor!=0) 
-		rc=*replColor; 
+	if (replColor!=0)
+		rc=*replColor;
 	else {
 		rc.rgbRed=255; rc.rgbGreen=255; rc.rgbBlue=255; rc.rgbReserved=0;
 	}//if
 	float x,y;              //destination location (float, with proper offset)
 	float origx, origy;     //origin location
 	int32_t destx, desty;       //destination location
-	
+
 	y=ssy;                  //initialize y
 	if (!IsIndexed()){ //RGB24
 		//optimized RGB24 implementation (direct write to destination):
@@ -936,7 +936,7 @@ bool CxImage::Rotate2(float angle,
 			}//for destx
 			y++;
 		}//for desty
-	} else { 
+	} else {
 		//non-optimized implementation for paletted images
 		for (desty=0; desty<newHeight; desty++) {
 			info.nProgress = (int32_t)(100*desty/newHeight);
@@ -953,10 +953,10 @@ bool CxImage::Rotate2(float angle,
 				rgb = GetPixelColorInterpolated(origx, origy, inMethod, ofMethod, &rc);
 				//***!*** SetPixelColor is slow for palleted images
 #if CXIMAGE_SUPPORT_ALPHA
-				if (AlphaIsValid()) 
+				if (AlphaIsValid())
 					imgDest.SetPixelColor(destx,desty,rgb,true);
-				else 
-#endif //CXIMAGE_SUPPORT_ALPHA     
+				else
+#endif //CXIMAGE_SUPPORT_ALPHA
 					imgDest.SetPixelColor(destx,desty,rgb,false);
 				x++;
 			}//for destx
@@ -964,10 +964,10 @@ bool CxImage::Rotate2(float angle,
 		}//for desty
 	}
 	//select the destination
-	
+
 	if (iDst) iDst->Transfer(imgDest);
 	else Transfer(imgDest);
-	
+
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -1040,7 +1040,7 @@ bool CxImage::Resample(int32_t newx, int32_t newy, int32_t mode, CxImage* iDst)
 
 	switch (mode) {
 	case 1: // nearest pixel
-	{ 
+	{
 		for(int32_t y=0; y<newy; y++){
 			info.nProgress = (int32_t)(100*y/newy);
 			if (info.nEscape) break;
@@ -1162,7 +1162,7 @@ bool CxImage::Resample(int32_t newx, int32_t newy, int32_t mode, CxImage* iDst)
 					// Set output
 					newImage.SetPixelColor(x,y,RGB(r,g,b));
 				}
-			} 
+			}
 		} else {
 			//high resolution shrink, thanks to Henrik Stellmann <henrik.stellmann@volleynet.de>
 			const int32_t ACCURACY = 1000;
@@ -1202,7 +1202,7 @@ bool CxImage::Resample(int32_t newx, int32_t newy, int32_t mode, CxImage* iDst)
 							u++;
 						}
 					}
-				} else {       // source row is splitted for 2 dest rows       
+				} else {       // source row is splitted for 2 dest rows
 					nWeightY = (int32_t)(((float)y - fEndY) * ACCURACY);
 					for (x = 0; x < head.biWidth; x++){
 						if ((float)x < fEndX){       // complete source pixel goes into 2 pixel
@@ -1273,7 +1273,7 @@ bool CxImage::Resample(int32_t newx, int32_t newy, int32_t mode, CxImage* iDst)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * New simpler resample. Adds new interpolation methods and simplifies code (using GetPixelColorInterpolated
- * and GetAreaColorInterpolated). It also (unlike old method) interpolates alpha layer. 
+ * and GetAreaColorInterpolated). It also (unlike old method) interpolates alpha layer.
  *
  * \param  newx, newy - size of resampled image
  * \param  inMethod - interpolation method to use (see comments at GetPixelColorInterpolated)
@@ -1286,25 +1286,25 @@ bool CxImage::Resample(int32_t newx, int32_t newy, int32_t mode, CxImage* iDst)
  * \author ***bd*** 2.2004
  */
 bool CxImage::Resample2(
-  int32_t newx, int32_t newy, 
-  InterpolationMethod const inMethod, 
-  OverflowMethod const ofMethod, 
+  int32_t newx, int32_t newy,
+  InterpolationMethod const inMethod,
+  OverflowMethod const ofMethod,
   CxImage* const iDst,
   bool const disableAveraging)
 {
 	if (newx<=0 || newy<=0 || !pDib) return false;
-	
+
 	if (head.biWidth==newx && head.biHeight==newy) {
 		//image already correct size (just copy and return)
 		if (iDst) iDst->Copy(*this);
 		return true;
 	}//if
-	
+
 	//calculate scale of new image (less than 1 for enlarge)
 	float xScale, yScale;
-	xScale = (float)head.biWidth  / (float)newx;    
+	xScale = (float)head.biWidth  / (float)newx;
 	yScale = (float)head.biHeight / (float)newy;
-	
+
 	//create temporary destination image
 	CxImage newImage;
 	newImage.CopyInfo(*this);
@@ -1314,13 +1314,13 @@ bool CxImage::Resample2(
 		strcpy(info.szLastError,newImage.GetLastError());
 		return false;
 	}
-	
+
 	//and alpha channel if required
 #if CXIMAGE_SUPPORT_ALPHA
 	if (AlphaIsValid()) newImage.AlphaCreate();
 	uint8_t *pxptra = 0;	// destination alpha data
 #endif
-	
+
 	float sX, sY;         //source location
 	int32_t dX,dY;           //destination pixel (int32_t value)
 	if ((xScale<=1 && yScale<=1) || disableAveraging) {
@@ -1385,9 +1385,9 @@ bool CxImage::Resample2(
 #endif //CXIMAGE_SUPPORT_ALPHA
 
 	//copy new image to the destination
-	if (iDst) 
+	if (iDst)
 		iDst->Transfer(newImage);
-	else 
+	else
 		Transfer(newImage);
 	return true;
 }
@@ -1486,21 +1486,21 @@ bool CxImage::DecreaseBpp(uint32_t nbit, bool errordiffusion, RGBQUAD* ppal, uin
 /**
  * Converts the image to B&W using the desired method :
  * - 0 = Floyd-Steinberg
- * - 1 = Ordered-Dithering (4x4) 
+ * - 1 = Ordered-Dithering (4x4)
  * - 2 = Burkes
  * - 3 = Stucki
  * - 4 = Jarvis-Judice-Ninke
  * - 5 = Sierra
  * - 6 = Stevenson-Arce
- * - 7 = Bayer (4x4 ordered dithering) 
- * - 8 = Bayer (8x8 ordered dithering) 
- * - 9 = Bayer (16x16 ordered dithering) 
+ * - 7 = Bayer (4x4 ordered dithering)
+ * - 8 = Bayer (8x8 ordered dithering)
+ * - 9 = Bayer (16x16 ordered dithering)
  */
 bool CxImage::Dither(int32_t method)
 {
 	if (!pDib) return false;
 	if (head.biBitCount == 1) return true;
-	
+
 	GrayScale();
 
 	CxImage tmp;
@@ -1533,7 +1533,7 @@ bool CxImage::Dither(int32_t method)
 		#define dth_MaxDitherIntensityVal (dth_NumRows*dth_NumCols*(dth_NumIntensityLevels-1))
 
 		int32_t DitherMatrix[dth_NumRows][dth_NumCols] = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5} };
-		
+
 		uint8_t Intensity[dth_NumIntensityLevels] = { 0,1 };                       // 2 LEVELS B/W
 		//uint8_t Intensity[NumIntensityLevels] = { 0,255 };                       // 2 LEVELS
 		//uint8_t Intensity[NumIntensityLevels] = { 0,127,255 };                   // 3 LEVELS
@@ -1544,7 +1544,7 @@ bool CxImage::Dither(int32_t method)
 		//uint8_t Intensity[NumIntensityLevels] = { 0,36,73,109,145,182,219,255 }; // 8 LEVELS
 		int32_t DitherIntensity, DitherMatrixIntensity, Offset, DeviceIntensity;
 		uint8_t DitherValue;
-  
+
 		for (int32_t y=0;y<head.biHeight;y++){
 			info.nProgress = (int32_t)(100*y/head.biHeight);
 			if (info.nEscape) break;
@@ -1573,7 +1573,7 @@ bool CxImage::Dither(int32_t method)
 
 		for (int32_t y = 0; y < head.biHeight; y++) {
 			info.nProgress = (int32_t)(100 * y / head.biHeight);
-			if (info.nEscape) 
+			if (info.nEscape)
 				break;
 			for (int32_t x = 0; x < head.biWidth; x++) {
 				level = BlindGetPixelIndex(x, y);
@@ -1601,13 +1601,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 4;
 						break;
 					case 0:
-						coeff = 8; 
+						coeff = 8;
 						break;
 					case 1:
-						coeff = 4; 
+						coeff = 4;
 						break;
 					case 2:
-						coeff = 2; 
+						coeff = 2;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 1) + (error * coeff) / TotalCoeffSum;
@@ -1627,7 +1627,7 @@ bool CxImage::Dither(int32_t method)
 
 		for (int32_t y = 0; y < head.biHeight; y++) {
 			info.nProgress = (int32_t)(100 * y / head.biHeight);
-			if (info.nEscape) 
+			if (info.nEscape)
 				break;
 			for (int32_t x = 0; x < head.biWidth; x++) {
 				level = BlindGetPixelIndex(x, y);
@@ -1655,13 +1655,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 4;
 						break;
 					case 0:
-						coeff = 8; 
+						coeff = 8;
 						break;
 					case 1:
-						coeff = 4; 
+						coeff = 4;
 						break;
 					case 2:
-						coeff = 2; 
+						coeff = 2;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 1) + (error * coeff) / TotalCoeffSum;
@@ -1677,13 +1677,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 2;
 						break;
 					case 0:
-						coeff = 4; 
+						coeff = 4;
 						break;
 					case 1:
-						coeff = 2; 
+						coeff = 2;
 						break;
 					case 2:
-						coeff = 1; 
+						coeff = 1;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 2) + (error * coeff) / TotalCoeffSum;
@@ -1703,7 +1703,7 @@ bool CxImage::Dither(int32_t method)
 
 		for (int32_t y = 0; y < head.biHeight; y++) {
 			info.nProgress = (int32_t)(100 * y / head.biHeight);
-			if (info.nEscape) 
+			if (info.nEscape)
 				break;
 			for (int32_t x = 0; x < head.biWidth; x++) {
 				level = BlindGetPixelIndex(x, y);
@@ -1731,13 +1731,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 5;
 						break;
 					case 0:
-						coeff = 7; 
+						coeff = 7;
 						break;
 					case 1:
-						coeff = 5; 
+						coeff = 5;
 						break;
 					case 2:
-						coeff = 3; 
+						coeff = 3;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 1) + (error * coeff) / TotalCoeffSum;
@@ -1753,13 +1753,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 3;
 						break;
 					case 0:
-						coeff = 5; 
+						coeff = 5;
 						break;
 					case 1:
-						coeff = 3; 
+						coeff = 3;
 						break;
 					case 2:
-						coeff = 1; 
+						coeff = 1;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 2) + (error * coeff) / TotalCoeffSum;
@@ -1779,7 +1779,7 @@ bool CxImage::Dither(int32_t method)
 
 		for (int32_t y = 0; y < head.biHeight; y++) {
 			info.nProgress = (int32_t)(100 * y / head.biHeight);
-			if (info.nEscape) 
+			if (info.nEscape)
 				break;
 			for (int32_t x = 0; x < head.biWidth; x++) {
 				level = BlindGetPixelIndex(x, y);
@@ -1807,13 +1807,13 @@ bool CxImage::Dither(int32_t method)
 						coeff = 4;
 						break;
 					case 0:
-						coeff = 5; 
+						coeff = 5;
 						break;
 					case 1:
-						coeff = 4; 
+						coeff = 4;
 						break;
 					case 2:
-						coeff = 2; 
+						coeff = 2;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 1) + (error * coeff) / TotalCoeffSum;
@@ -1826,10 +1826,10 @@ bool CxImage::Dither(int32_t method)
 						coeff = 2;
 						break;
 					case 0:
-						coeff = 3; 
+						coeff = 3;
 						break;
 					case 1:
-						coeff = 2; 
+						coeff = 2;
 						break;
 					}
 					nlevel = GetPixelIndex(x + i, y + 2) + (error * coeff) / TotalCoeffSum;
@@ -1849,7 +1849,7 @@ bool CxImage::Dither(int32_t method)
 
 		for (int32_t y = 0; y < head.biHeight; y++) {
 			info.nProgress = (int32_t)(100 * y / head.biHeight);
-			if (info.nEscape) 
+			if (info.nEscape)
 				break;
 			for (int32_t x = 0; x < head.biWidth; x++) {
 				level = BlindGetPixelIndex(x, y);
@@ -2026,7 +2026,7 @@ bool CxImage::Dither(int32_t method)
 			{  11,227, 51,211,  7,237, 61,221,  8,224, 48,208,  4,238, 62,222},
 			{ 139, 75,179,115,135, 71,189,125,136, 72,176,112,132, 68,190,126},
 			{  43,203, 27,243, 39,199, 23,253, 40,200, 24,240, 36,196, 20,254},
-			{ 171,107,155, 91,167,103,151, 87,168,104,152, 88,164,100,148, 84} 
+			{ 171,107,155, 91,167,103,151, 87,168,104,152, 88,164,100,148, 84}
 		};
 
 		for (int32_t y=0;y<head.biHeight;y++){
@@ -2092,7 +2092,7 @@ bool CxImage::Dither(int32_t method)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  *	CropRotatedRectangle
- * \param topx,topy : topmost and leftmost point of the rectangle 
+ * \param topx,topy : topmost and leftmost point of the rectangle
           (topmost, and if there are 2 topmost points, the left one)
  * \param  width     : size of the right hand side of rect, from (topx,topy) roundwalking clockwise
  * \param  height    : size of the left hand side of rect, from (topx,topy) roundwalking clockwise
@@ -2104,7 +2104,7 @@ bool CxImage::CropRotatedRectangle( int32_t topx, int32_t topy, int32_t width, i
 {
 	if (!pDib) return false;
 
-	
+
 	int32_t startx,starty,endx,endy;
 	double cos_angle = cos(angle/*/57.295779513082320877*/);
     double sin_angle = sin(angle/*/57.295779513082320877*/);
@@ -2132,7 +2132,7 @@ bool CxImage::CropRotatedRectangle( int32_t topx, int32_t topy, int32_t width, i
 		strcpy(info.szLastError,tmp.GetLastError());
 		return false;
 	}
-	
+
 	// the midpoint of the image now became the same as the midpoint of the rectangle
 	// rotate new image with minus angle amount
     if ( false == tmp.Rotate( (float)(-angle*57.295779513082320877) ) ) // Rotate expects angle in degrees
@@ -2235,7 +2235,7 @@ bool CxImage::Crop(int32_t left, int32_t top, int32_t right, int32_t bottom, CxI
  * \param xgain, ygain : can be from 0 to 1.
  * \param xpivot, ypivot : is the center of the transformation.
  * \param bEnableInterpolation : if true, enables bilinear interpolation.
- * \return true if everything is ok 
+ * \return true if everything is ok
  */
 bool CxImage::Skew(float xgain, float ygain, int32_t xpivot, int32_t ypivot, bool bEnableInterpolation)
 {
@@ -2293,7 +2293,7 @@ bool CxImage::Skew(float xgain, float ygain, int32_t xpivot, int32_t ypivot, boo
  * \param left, top, right, bottom = additional dimensions, should be greater than 0.
  * \param canvascolor = border color. canvascolor.rgbReserved will set the alpha channel (if any) in the border.
  * \param iDst = pointer to destination image (if it's 0, this image is modified)
- * \return true if everything is ok 
+ * \return true if everything is ok
  * \author [Colin Urquhart]; changes [DP]
  */
 bool CxImage::Expand(int32_t left, int32_t top, int32_t right, int32_t bottom, RGBQUAD canvascolor, CxImage* iDst)
@@ -2307,7 +2307,7 @@ bool CxImage::Expand(int32_t left, int32_t top, int32_t right, int32_t bottom, R
 
     right = left + head.biWidth - 1;
     top = bottom + head.biHeight - 1;
-    
+
     CxImage tmp;
 	tmp.CopyInfo(*this);
 	if (!tmp.Create(newWidth, newHeight, head.biBitCount, info.dwType)){
@@ -2462,7 +2462,7 @@ bool CxImage::Thumbnail(int32_t newx, int32_t newy, RGBQUAD canvascolor, CxImage
  * \param type - for different transformations
  * - 0 for normal (proturberant) FishEye
  * - 1 for reverse (concave) FishEye
- * - 2 for Swirle 
+ * - 2 for Swirle
  * - 3 for Cilinder mirror
  * - 4 for bathroom
  *
@@ -2491,7 +2491,7 @@ bool CxImage::CircleTransform(int32_t type,int32_t rmax,float Koeff)
 		xmin = ymin = 0;
 		xmax = head.biWidth; ymax=head.biHeight;
 	}
-	
+
 	xmid = (int32_t) (tmp.GetWidth()/2);
 	ymid = (int32_t) (tmp.GetHeight()/2);
 
@@ -2555,7 +2555,7 @@ bool CxImage::CircleTransform(int32_t type,int32_t rmax,float Koeff)
  * It's main advantage over "high" resulution shrink is speed, so it's useful, when speed is most
  * important (preview thumbnails, "map" view, ...).
  * Method is optimized for RGB24 images.
- * 
+ *
  * \param  newx, newy - size of destination image (must be smaller than original!)
  * \param  iDst - pointer to destination image (if it's 0, this image is modified)
  * \param  bChangeBpp - flag points to change result image bpp (if it's true, this result image bpp = 24 (useful for B/W image thumbnails))
@@ -2566,8 +2566,8 @@ bool CxImage::CircleTransform(int32_t type,int32_t rmax,float Koeff)
 bool CxImage::QIShrink(int32_t newx, int32_t newy, CxImage* const iDst, bool bChangeBpp)
 {
 	if (!pDib) return false;
-	
-	if (newx>head.biWidth || newy>head.biHeight) { 
+
+	if (newx>head.biWidth || newy>head.biHeight) {
 		//let me repeat... this method can't enlarge image
 		strcpy(info.szLastError,"QIShrink can't enlarge image");
 		return false;
@@ -2578,7 +2578,7 @@ bool CxImage::QIShrink(int32_t newx, int32_t newy, CxImage* const iDst, bool bCh
 		if (iDst) iDst->Copy(*this);
 		return true;
 	}//if
-	
+
 	//create temporary destination image
 	CxImage newImage;
 	newImage.CopyInfo(*this);
@@ -2613,14 +2613,14 @@ bool CxImage::QIShrink(int32_t newx, int32_t newy, CxImage* const iDst, bool bCh
 		uint8_t *destPtr, *srcPtr, *destPtrS, *srcPtrS;        //destination and source pixel, and beginnings of current row
 		srcPtrS=(uint8_t*)BlindGetPixelPointer(0,0);
 		destPtrS=(uint8_t*)newImage.BlindGetPixelPointer(0,0);
-		int32_t ex=0, ey=0;                                               //ex and ey replace division... 
+		int32_t ex=0, ey=0;                                               //ex and ey replace division...
 		int32_t dy=0;
 		//(we just add pixels, until by adding newx or newy we get a number greater than old size... then
 		// it's time to move to next pixel)
-        
+
 		for(int32_t y=0; y<oldy; y++){                                    //for all source rows
 			info.nProgress = (int32_t)(100*y/oldy); if (info.nEscape) break;
-			ey += newy;                                                   
+			ey += newy;
 			ex = 0;                                                       //restart with ex = 0
 			accuPtr=accu;                                                 //restart from beginning of accu
 			srcPtr=srcPtrS;                                               //and from new source line
@@ -2667,15 +2667,15 @@ bool CxImage::QIShrink(int32_t newx, int32_t newy, CxImage* const iDst, bool bCh
 		}//for y
     } else {
 		//standard version with GetPixelColor...
-		int32_t ex=0, ey=0;                                               //ex and ey replace division... 
+		int32_t ex=0, ey=0;                                               //ex and ey replace division...
 		int32_t dy=0;
 		//(we just add pixels, until by adding newx or newy we get a number greater than old size... then
 		// it's time to move to next pixel)
 		RGBQUAD rgb;
-        
+
 		for(int32_t y=0; y<oldy; y++){                                    //for all source rows
 			info.nProgress = (int32_t)(100*y/oldy); if (info.nEscape) break;
-			ey += newy;                                                   
+			ey += newy;
 			ex = 0;                                                       //restart with ex = 0
 			accuPtr=accu;                                                 //restart from beginning of accu
 			for(int32_t x=0; x<oldx; x++){                                    //for all source columns
@@ -2714,11 +2714,11 @@ bool CxImage::QIShrink(int32_t newx, int32_t newy, CxImage* const iDst, bool bCh
     }//if
 
     delete [] accu;                                                 //delete helper array
-	
+
 	//copy new image to the destination
-	if (iDst) 
+	if (iDst)
 		iDst->Transfer(newImage);
-	else 
+	else
 		Transfer(newImage);
     return true;
 

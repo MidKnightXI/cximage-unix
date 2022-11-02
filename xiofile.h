@@ -33,7 +33,7 @@ public:
 	virtual bool Close()
 	{
 		int32_t iErr = 0;
-		if ( (m_fp) && (m_bCloseFile) ){ 
+		if ( (m_fp) && (m_bCloseFile) ){
 			iErr = fclose(m_fp);
 			m_fp = NULL;
 		}

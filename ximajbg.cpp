@@ -50,7 +50,7 @@ bool CxImageJBG::Decode(CxFile *hFile)
 	if (hFile->Error())
 		cx_throw("Problem while reading input file");
 	if (result != JBG_EOK && result != JBG_EOK_INTR)
-		cx_throw("Problem with input file"); 
+		cx_throw("Problem with input file");
 
 	int32_t w, h, bpp, planes, ew;
 
